@@ -11,24 +11,24 @@ namespace DAPTUD.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class StoreController : ControllerBase
+    public class SanPhamController : ControllerBase
     {
-        private readonly StoreService _storeService;
+        private readonly SanPhamService sanPhamService;
 
-        public StoreController(StoreService storeService)
+        public SanPhamController(SanPhamService _sanPhamService)
         {
-            _storeService = storeService;
+            sanPhamService = _sanPhamService;
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Store>> GetStoreById(string id)
+        public async Task<ActionResult<SanPham>> GetSanPhamById(string id)
         {
-            var store = await _storeService.GetStoreById(id);
-            if (store == null)
+            var sanPham = await sanPhamService.GetSanPhamById(id);
+            if (sanPham == null)
             {
                 return NotFound();
             }
-            return Ok(store);
+            return Ok(sanPham);
         }
     }
 }

@@ -8,20 +8,20 @@ using System.Threading.Tasks;
 
 namespace DAPTUD.Services
 {
-    public class StoreService
+    public class SanPhamService
     {
-        private readonly IMongoCollection<Store> _stores;
+        private readonly IMongoCollection<SanPham> sanPham;
 
-        public StoreService(IDatabaseConfig dbConfig)
+        public SanPhamService(IDatabaseConfig dbConfig)
         {
             var client = new MongoClient(dbConfig.ConnectionString);
             var database = client.GetDatabase(dbConfig.DatabaseName);
-            _stores = database.GetCollection<Store>(dbConfig.StoresCollectionName);
+            sanPham = database.GetCollection<SanPham>(dbConfig.SanPhamCollectionName);
         }
 
-        public async Task<List<Store>> GetStoreById(string id)
+        public async Task<List<SanPham>> GetSanPhamById(string id)
         {
-            return await _stores.Find<Store>(s => s.id == id).ToListAsync();
+            return await sanPham.Find<SanPham>(s => s.id == id).ToListAsync();
         }
     }
 

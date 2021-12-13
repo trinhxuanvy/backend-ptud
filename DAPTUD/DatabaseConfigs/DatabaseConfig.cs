@@ -8,7 +8,8 @@ namespace DAPTUD.DbConfig
 {
     public class DatabaseConfig : IDatabaseConfig
     {
-        public string StoresCollectionName { get; set; }
+        public string SanPhamCollectionName { get; set; }
+        public string DonHangCollectionName { get; set; }
         public string ConnectionString { get; set; }
         public string DatabaseName { get; set; }
     }

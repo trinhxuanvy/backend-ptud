@@ -11,6 +11,8 @@ namespace DAPTUD.IDbConfig
 
         string ConnectionString { get; set; }
 
-        string StoresCollectionName { get; set; }
+        string SanPhamCollectionName { get; set; }
+
+        string DonHangCollectionName { get; set; }
     }
 }

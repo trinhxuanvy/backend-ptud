@@ -22,27 +22,27 @@ namespace DAPTUD.Controllers
         }
 
         // GET: api/<ValuesController>
-        [HttpGet]
-        public async Task<ActionResult<DonHang>> GetAllDonHang()
+        [HttpGet("nguoimua/{id}")]
+        public async Task<ActionResult<DonHang>> GetAllDonHangByNguoiMua(string id)
         {
-            var store = await donHangService.GetAllDonHang();
-            if (store == null)
+            var donHang = await donHangService.GetAllDonHangByNguoiMua(id);
+            if (donHang == null)
             {
                 return NotFound();
             }
-            return Ok(store);
+            return Ok(donHang);
         }
 
         // GET api/<ValuesController>/5
         [HttpGet("{id}")]
         public async Task<ActionResult<DonHang>> GetDonHangById(string id)
         {
-            var store = await donHangService.GetDonHangById(id);
-            if (store == null)
+            var donHang = await donHangService.GetDonHangById(id);
+            if (donHang == null)
             {
                 return NotFound();
             }
-            return Ok(store);
+            return Ok(donHang);
         }
 
         // POST api/<ValuesController>

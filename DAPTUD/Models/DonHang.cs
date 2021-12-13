@@ -13,6 +13,8 @@ namespace DAPTUD.Models
 
         public string id { get; set; }
         public DateTime thoiGianDat { get; set; }
+
+        [BsonRepresentation(MongoDB.Bson.BsonType.ObjectId)]
         public string nguoiMua { get; set; }
         public int tinhTrang { get; set; }
     }

@@ -21,9 +21,9 @@ namespace DAPTUD.Services
         {
             return await donHang.Find<DonHang>(s => s.id == id).ToListAsync();
         }
-        public async Task<List<DonHang>> GetAllDonHang()
+        public async Task<List<DonHang>> GetAllDonHangByNguoiMua(string idNguoiMua)
         {
-            return await donHang.Find<DonHang>(s => true).ToListAsync();
+            return await donHang.Find<DonHang>(s => s.nguoiMua == idNguoiMua).ToListAsync();
         }
     }
 }

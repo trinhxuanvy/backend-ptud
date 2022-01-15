@@ -10,6 +10,8 @@ namespace DAPTUD.DbConfig
     {
         public string SanPhamCollectionName { get; set; }
         public string DonHangCollectionName { get; set; }
+        public string ChiTietDonHangCollectionName { get; set; }
+        public string NguoiDungCollectionName { get; set; }
         public string ConnectionString { get; set; }
         public string DatabaseName { get; set; }
     }

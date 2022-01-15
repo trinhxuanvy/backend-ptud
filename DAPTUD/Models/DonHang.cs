@@ -11,19 +11,15 @@ namespace DAPTUD.Models
         [BsonId]
         [BsonRepresentation(MongoDB.Bson.BsonType.ObjectId)]
         public string id { get; set; }
-
         public string tinhTrang { get; set; }
-
         public DateTime thoiGianDat { get; set; }
 
         [BsonRepresentation(MongoDB.Bson.BsonType.ObjectId)]
         public string nguoiMua { get; set; }
-
         public string phuongThucThanhToan { get; set; }
 
         [BsonRepresentation(MongoDB.Bson.BsonType.ObjectId)]
         public string shipper { get; set; }
-
         [BsonRepresentation(MongoDB.Bson.BsonType.ObjectId)]
         public string cuaHang { get; set; }
 
@@ -34,7 +30,6 @@ namespace DAPTUD.Models
         public double tongTien { get; set; }
 
         public int khDanhGiaShipper { get; set; }
-
         public string tinhTrangCu { get; set; }
     }
 }

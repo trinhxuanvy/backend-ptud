@@ -1,4 +1,4 @@
-using DAPTUD.DbConfig;
+﻿using DAPTUD.DbConfig;
 using DAPTUD.IDbConfig;
 using DAPTUD.Services;
 using Microsoft.AspNetCore.Builder;
@@ -15,7 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
+using Microsoft.EntityFrameworkCore;
 namespace DAPTUD
 {
     public class Startup

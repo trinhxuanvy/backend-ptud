@@ -14,35 +14,36 @@ namespace DAPTUD.Controllers
     [ApiController]
     public class DonHangController : ControllerBase
     {
-        private readonly DonHangService donHangService;
+        private readonly DonHangService invoiceService;
 
         public DonHangController(DonHangService _donHangService)
         {
-            donHangService = _donHangService;
+            invoiceService = _donHangService;
         }
 
         // GET: api/<ValuesController>
         [HttpGet("nguoimua/{id}")]
-        public async Task<ActionResult<DonHang>> GetAllDonHangByNguoiMua(string id)
+        public async Task<ActionResult<DonHang>> GetInfOfInvoicesByCus(string id)
         {
-            var donHang = await donHangService.GetAllDonHangByNguoiMua(id);
-            if (donHang == null)
+            var invoices = await invoiceService.GetInfOfInvoicesByCus(id);
+            if (invoices == null)
             {
                 return NotFound();
             }
-            return Ok(donHang);
+            return Ok(invoices);
         }
-
+        
+        
         // GET api/<ValuesController>/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<DonHang>> GetDonHangById(string id)
+        public async Task<ActionResult<DonHang>> GetInvoiceById(string id)
         {
-            var donHang = await donHangService.GetDonHangById(id);
-            if (donHang == null)
+            var invoice = await invoiceService.GetInvoiceById(id);
+            if (invoice == null)
             {
                 return NotFound();
             }
-            return Ok(donHang);
+            return Ok(invoice);
         }
 
         // POST api/<ValuesController>
@@ -52,14 +53,29 @@ namespace DAPTUD.Controllers
         }
 
         // PUT api/<ValuesController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        /*[HttpPut("{id}")]
+        public async Task<IActionResult> CancelInvoice(string id)
         {
+            var result = await invoiceService.CancelInvoice(id);
+            if (result == null)
+            {
+                return NotFound();
+            }
+            return Ok(result);
+        }*/
+        [HttpPut("{id}")]
+        public async Task<IActionResult> CancelInvoice(string id, DonHang inv)
+        {
+            var result = await invoiceService.CancelInvoice(id);
+            if (result == null)
+            {
+                return NotFound();
+            }
+            return Ok(result);
         }
-
         // DELETE api/<ValuesController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public void Delete(string id)
         {
         }
     }

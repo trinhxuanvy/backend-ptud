@@ -1,4 +1,4 @@
-﻿using DAPTUD.Entities;
+﻿using DAPTUD.Models;
 using DAPTUD.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -13,22 +13,22 @@ namespace DAPTUD.Controllers
     [Route("api/[controller]")]
     public class SanPhamController : ControllerBase
     {
-        private readonly SanPhamService sanPhamService;
+        private readonly SanPhamService productService;
 
-        public SanPhamController(SanPhamService _sanPhamService)
+        public SanPhamController(SanPhamService _productService)
         {
-            sanPhamService = _sanPhamService;
+            productService = _productService;
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<SanPham>> GetSanPhamById(string id)
+        public async Task<ActionResult<SanPham>> GetProductById(string id)
         {
-            var sanPham = await sanPhamService.GetSanPhamById(id);
-            if (sanPham == null)
+            var product = await productService.GetProductById(id);
+            if (product == null)
             {
                 return NotFound();
             }
-            return Ok(sanPham);
+            return Ok(product);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using DAPTUD.Entities;
+﻿using DAPTUD.Models;
 using DAPTUD.IDbConfig;
 using MongoDB.Driver;
 using System;
@@ -10,18 +10,18 @@ namespace DAPTUD.Services
 {
     public class SanPhamService
     {
-        private readonly IMongoCollection<SanPham> sanPham;
+        private readonly IMongoCollection<SanPham> product;
 
         public SanPhamService(IDatabaseConfig dbConfig)
         {
             var client = new MongoClient(dbConfig.ConnectionString);
             var database = client.GetDatabase(dbConfig.DatabaseName);
-            sanPham = database.GetCollection<SanPham>(dbConfig.SanPhamCollectionName);
+            product = database.GetCollection<SanPham>(dbConfig.SanPhamCollectionName);
         }
 
-        public async Task<List<SanPham>> GetSanPhamById(string id)
+        public async Task<List<SanPham>> GetProductById(string id)
         {
-            return await sanPham.Find<SanPham>(s => s.id == id).ToListAsync();
+            return await product.Find<SanPham>(s => s.id == id).ToListAsync();
         }
     }
 

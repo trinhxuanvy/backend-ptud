@@ -14,5 +14,6 @@ namespace DAPTUD.IDbConfig
         string SanPhamCollectionName { get; set; }
 
         string DonHangCollectionName { get; set; }
+        string ChiTietDonHangCollectionName { get; set; }
     }
 }

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DAPTUD.Entities
+namespace DAPTUD.Models
 {
     public class SanPham
     {
@@ -25,5 +25,10 @@ namespace DAPTUD.Entities
 
         [BsonRepresentation(MongoDB.Bson.BsonType.ObjectId)]
         public string loaiHang { get; set; }
+        public string hinhAnh { get; set; }
+        public bool thietYeu { get; set; }
+        public string tenCuaHang { get; set; }
+        public string tenLoaiHang { get; set; }
+        public string donViTinh { get; set; }
     }
 }

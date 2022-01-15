@@ -111,10 +111,9 @@ namespace DAPTUD.Services
 
             return await invoices.UpdateOneAsync(filter, acceptUpdate);
         }
-
         public async Task<List<DonHang>> GetAllDonHangForStatistic(string stordId)
         {
-            return await donHang.Find<DonHang>(d => d.cuaHang == stordId && d.tinhTrang == "Giao thành công").ToListAsync();
+            return await invoices.Find<DonHang>(d => d.cuaHang == stordId && d.tinhTrang == "Giao thành công").ToListAsync();
         }
     }
 }

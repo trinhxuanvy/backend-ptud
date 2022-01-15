@@ -35,6 +35,7 @@ namespace DAPTUD
             services.AddSingleton<IDatabaseConfig>(provider => provider.GetRequiredService<IOptions<DatabaseConfig>>().Value);
             services.AddScoped<SanPhamService>();
             services.AddScoped<DonHangService>();
+            services.AddScoped<NguoiDungService>();
             services.AddControllers();
             services.AddCors(policy => policy.AddPolicy("CorsPolicy", option => option
             .AllowAnyOrigin()

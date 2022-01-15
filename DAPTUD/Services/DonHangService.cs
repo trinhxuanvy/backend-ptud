@@ -115,5 +115,33 @@ namespace DAPTUD.Services
         {
             return await invoices.Find<DonHang>(d => d.cuaHang == stordId && d.tinhTrang == "Giao thành công").ToListAsync();
         }
+        public Task<List<DonHang>> GetAll()
+        {
+            return invoices.Find(c => true).ToListAsync();
+        }
+        public async Task<DonHang> CreateAsync(DonHang donHang)
+        {
+            await invoices.InsertOneAsync(donHang).ConfigureAwait(false);
+            return donHang;
+        }
+        public async Task<DonHang> Update(string id, DonHang donHangIn)
+        {
+            DonHang donHang = await invoices.Find(c => c.id.ToString() == id).FirstOrDefaultAsync().ConfigureAwait(false);
+            donHangIn.id = donHang.id;
+            if (donHangIn.thoiGianDat == null) donHangIn.thoiGianDat = donHang.thoiGianDat;
+            if (donHangIn.tinhTrang == null) donHangIn.tinhTrang = donHang.tinhTrang;
+            var updatedDonHang = await invoices.ReplaceOneAsync(c => c.id.ToString() == id, donHangIn).ConfigureAwait(false);
+            return donHangIn;
+        }
+        public async Task<DonHang> DeleteAsync(string id)
+        {
+            DonHang donHang = await invoices.Find(c => c.id.ToString() == id).FirstOrDefaultAsync().ConfigureAwait(false);
+            if (donHang == null)
+            {
+                return null;
+            }
+            var updatedDonHang = await invoices.DeleteOneAsync(c => c.id.ToString() == id).ConfigureAwait(false);
+            return donHang;
+        }
     }
 }

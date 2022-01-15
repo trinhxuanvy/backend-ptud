@@ -11,9 +11,13 @@ namespace DAPTUD.Entities
         [BsonId]
         [BsonRepresentation(MongoDB.Bson.BsonType.ObjectId)]
         public string id { get; set; }
+
         public string tenSanPham { get; set; }
+
         public string xuatXu { get; set; }
+
         public int giaTien { get; set; }
+
         public DateTime hanSuDung { get; set; }
 
         [BsonRepresentation(MongoDB.Bson.BsonType.ObjectId)]

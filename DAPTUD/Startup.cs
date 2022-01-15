@@ -36,6 +36,9 @@ namespace DAPTUD
             services.AddScoped<SanPhamService>();
             services.AddScoped<DonHangService>();
             services.AddScoped<NguoiDungService>();
+            services.AddScoped<ChiTietDonHangService>();
+            services.AddScoped<VanDonService>();
+            services.AddScoped<ShipperService>();
             services.AddControllers();
             services.AddCors(policy => policy.AddPolicy("CorsPolicy", option => option
             .AllowAnyOrigin()

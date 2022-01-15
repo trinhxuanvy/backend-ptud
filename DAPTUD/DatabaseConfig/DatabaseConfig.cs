@@ -14,5 +14,7 @@ namespace DAPTUD.DbConfig
         public string NguoiDungCollectionName { get; set; }
         public string ConnectionString { get; set; }
         public string DatabaseName { get; set; }
+        public string VanDonCollectionName { get; set; }
+        public string ShipperCollectionName { get; set; }
     }
 }

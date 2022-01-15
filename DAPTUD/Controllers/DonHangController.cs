@@ -45,11 +45,18 @@ namespace DAPTUD.Controllers
             }
             return Ok(invoice);
         }
+        //Get all donHangs
+        [HttpGet]
+        public Task<List<DonHang>> GetAll()
+        {
+            return invoiceService.GetAll();
+        }
 
         // POST api/<ValuesController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<DonHang> CreateAsync(DonHang donHang)
         {
+            return await invoiceService.CreateAsync(donHang);
         }
 
         // PUT api/<ValuesController>/5
@@ -63,7 +70,7 @@ namespace DAPTUD.Controllers
             }
             return Ok(result);
         }*/
-        [HttpPut("{id}")]
+        [HttpPut("/huyDonHang/{id}")]
         public async Task<IActionResult> CancelInvoice(string id, DonHang inv)
         {
             var result = await invoiceService.CancelInvoice(id);
@@ -73,10 +80,27 @@ namespace DAPTUD.Controllers
             }
             return Ok(result);
         }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(string id, DonHang donHangIn)
+        {
+            var donHang = await invoiceService.Update(id, donHangIn);
+            if (donHang == null)
+            {
+                return NotFound();
+            }
+            return Ok(donHang);
+        }
         // DELETE api/<ValuesController>/5
         [HttpDelete("{id}")]
-        public void Delete(string id)
+        public async Task<IActionResult> DeleteAsync(string id)
         {
+            var donHang = await invoiceService.DeleteAsync(id);
+            if (donHang == null)
+            {
+                return NotFound();
+            }
+            return Ok(donHang);
         }
     }
 }

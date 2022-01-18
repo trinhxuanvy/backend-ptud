@@ -37,5 +37,10 @@ namespace DAPTUD.Services
             await invoiceDetails.InsertOneAsync(chiTietDonHang).ConfigureAwait(false);
             return chiTietDonHang;
         }
+        public async Task<List<ChiTietDonHang>> CreateInvoiceDetails(List<ChiTietDonHang> chiTietDonHang)
+        {
+            await invoiceDetails.InsertManyAsync(chiTietDonHang);
+            return chiTietDonHang;
+        }
     }
 }

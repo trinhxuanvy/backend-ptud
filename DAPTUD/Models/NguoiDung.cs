@@ -8,7 +8,9 @@ namespace DAPTUD.Models
 {
     public class ProductCustom
     {
+        public string productid { get; set; }
         public string product { get; set; }
+        public string store { get; set; }
         public int numOfElement { get; set; }
         public string unit { get; set; }
         public int price { get; set; }
@@ -16,7 +18,6 @@ namespace DAPTUD.Models
     }
     public class Cart
     {
-        [BsonRepresentation(MongoDB.Bson.BsonType.ObjectId)]
         public string sanPham { get; set; }
         public string tenSanPham { get; set; }
         public int soLuong { get; set; }

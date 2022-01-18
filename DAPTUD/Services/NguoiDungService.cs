@@ -39,5 +39,20 @@ namespace DAPTUD.Services
 
             return cart;
         }
+
+        public async Task<UpdateResult> ClearCart(string id)
+        {
+            var filter = Builders<NguoiDung>.Filter.Eq("id", id);
+            var acceptDefault = Builders<NguoiDung>.Update.Set("id", id);
+            var acceptUpdate = Builders<NguoiDung>.Update.PopLast("gioHang");
+
+            NguoiDung customer = await cus.Find<NguoiDung>(s => s.id == id).FirstOrDefaultAsync();
+            for (int i = 0; i < customer.gioHang.Length; i++)
+            {
+                await cus.UpdateOneAsync(filter, acceptUpdate);
+            }
+
+            return await cus.UpdateOneAsync(filter, acceptDefault);
+        }
     }
 }

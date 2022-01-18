@@ -70,7 +70,7 @@ namespace DAPTUD.Controllers
             }
             return Ok(result);
         }*/
-        [HttpPut("/huyDonHang/{id}")]
+        [HttpPut("HuyDonHang/{id}")]
         public async Task<IActionResult> CancelInvoice(string id, DonHang inv)
         {
             var result = await invoiceService.CancelInvoice(id);

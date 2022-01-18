@@ -12,25 +12,25 @@ namespace DAPTUD.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class NguoiDungController : ControllerBase
-    {
-        // GET: api/<NguoiDungController>
-        private readonly NguoiDungService cusService;
 
-        public NguoiDungController(NguoiDungService _cusService)
+    public class CheckoutController : ControllerBase
+    {
+        private readonly CheckoutService cusService;
+
+        public CheckoutController(CheckoutService _cusService)
         {
             cusService = _cusService;
         }
-
+        // GET: api/<CheckoutController>
         [HttpGet]
         public IEnumerable<string> Get()
         {
             return new string[] { "value1", "value2" };
         }
 
-        // GET api/<NguoiDungController>/5
+        // GET api/<CheckoutController>/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<List<ProductCustom>>> GetCartById(string id)
+        public async Task<ActionResult<CheckoutService>> GetCartById(string id)
         {
             var cart = await cusService.GetCartById(id);
             if (cart == null)
@@ -40,25 +40,19 @@ namespace DAPTUD.Controllers
             return Ok(cart);
         }
 
-        // POST api/<NguoiDungController>
+        // POST api/<CheckoutController>
         [HttpPost]
         public void Post([FromBody] string value)
         {
         }
 
-        // PUT api/<NguoiDungController>/5
-        [HttpPut("XoaGioHang/{id}")]
-        public async Task<IActionResult> ClearCart(string id, DonHang inv)
+        // PUT api/<CheckoutController>/5
+        [HttpPut("{id}")]
+        public void Put(int id, [FromBody] string value)
         {
-            var result = await cusService.ClearCart(id);
-            if (result == null)
-            {
-                return NotFound();
-            }
-            return Ok(result);
         }
 
-        // DELETE api/<NguoiDungController>/5
+        // DELETE api/<CheckoutController>/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {

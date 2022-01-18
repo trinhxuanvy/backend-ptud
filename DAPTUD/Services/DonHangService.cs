@@ -93,14 +93,14 @@ namespace DAPTUD.Services
             var filter = Builders<DonHang>.Filter.Eq("id", id);
             var acceptUpdate = Builders<DonHang>.Update.Set("tinhTrang", "Đã huỷ");
             var denyUpdate = Builders<DonHang>.Update.Set("id", id);
-
+            
             List<DonHang> invs = await invoices.Find(s => s.id == id).ToListAsync();
 
             if(invs.Count() > 1)
             {
                 return await invoices.UpdateOneAsync(filter, denyUpdate);
             }
-            
+
             foreach (DonHang inv in invs)
             {
                 if(inv.tinhTrang != "Đóng gói")
@@ -108,8 +108,8 @@ namespace DAPTUD.Services
                     return await invoices.UpdateOneAsync(filter, denyUpdate);
                 }
             }
-
-            return await invoices.UpdateOneAsync(filter, acceptUpdate);
+            
+            return await invoices.UpdateOneAsync(filter, acceptUpdate.Set("tinhTrangCu", invs[0].tinhTrangCu == "" ? (invs[0].tinhTrang) : (invs[0].tinhTrang += " -> Đã huỷ")));
         }
         public async Task<List<DonHang>> GetAllDonHangForStatistic(string stordId)
         {

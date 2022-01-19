@@ -52,5 +52,10 @@ namespace DAPTUD.Controllers
         {
             return await productService.CreateProduct(prod);
         }
+        [HttpGet("timkiem/{name}")]
+        public List<SanPham> SearchProducts(string name)
+        {
+            return productService.SearchProductByName(name);
+        }
     }
 }

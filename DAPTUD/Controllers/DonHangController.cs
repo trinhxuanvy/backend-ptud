@@ -32,8 +32,19 @@ namespace DAPTUD.Controllers
             }
             return Ok(invoices);
         }
-        
-        
+
+        [HttpGet("cuahang/{id}")]
+        public async Task<ActionResult<DonHang>> GetInfOfInvoicesByStore(string id)
+        {
+            var invoices = await invoiceService.GetInfOfInvoicesByStore(id);
+            if (invoices == null)
+            {
+                return NotFound();
+            }
+            return Ok(invoices);
+        }
+
+
         // GET api/<ValuesController>/5
         [HttpGet("{id}")]
         public async Task<ActionResult<DonHang>> GetInvoiceById(string id)

@@ -92,6 +92,55 @@ namespace DAPTUD.Services
 
             return result;
         }
+
+        public async Task<List<Invoice>> GetInfOfInvoicesByStore(string idStore)
+        {
+            List<Invoice> result = new List<Invoice>();
+
+            List<DonHang> invs = await invoices.Find<DonHang>(s => s.cuaHang == idStore).ToListAsync();
+
+            int i = 1;
+            foreach (DonHang inv in invs)
+            {
+                List<ChiTietDonHang> invdetails = await invoiceDetails.Find<ChiTietDonHang>(s => s.donHang == inv.id).ToListAsync();
+
+                List<InvoiceDetail> listinvoiceDetails = new List<InvoiceDetail>();
+
+                int tmptotal = 0;
+
+                foreach (ChiTietDonHang invdetail in invdetails)
+                {
+                    List<SanPham> prods = await product.Find<SanPham>(s => s.id == invdetail.sanPham).ToListAsync();
+
+                    foreach (SanPham product in prods)
+                    {
+                        InvoiceDetail tmpInvoiceDetail = new InvoiceDetail();
+                        tmpInvoiceDetail.product = product.tenSanPham;
+                        tmpInvoiceDetail.price = product.giaTien;
+                        tmpInvoiceDetail.numOfElement = invdetail.soLuong;
+                        tmpInvoiceDetail.unit = product.donViTinh;
+                        tmptotal += product.giaTien * invdetail.soLuong;
+                        listinvoiceDetails.Add(tmpInvoiceDetail);
+                    }
+                }
+
+                Invoice tmp = new Invoice();
+                tmp.ID = i;
+                tmp.invoiceID = inv.id;
+                tmp.timeOrder = inv.thoiGianDat.GetDateTimeFormats('d')[0];
+                tmp.invoiceDetail = listinvoiceDetails;
+                tmp.total = tmptotal;
+                tmp.status = inv.tinhTrang;
+                tmp.oldStatus = inv.tinhTrangCu;
+                tmp.payment = inv.phuongThucThanhToan;
+                tmp.action = inv.tinhTrang == "Đóng gói" ? true : false;
+                result.Add(tmp);
+
+                i++;
+            }
+
+            return result;
+        }
         public async Task<UpdateResult> CancelInvoice(string id)
         {
             var filter = Builders<DonHang>.Filter.Eq("id", id);

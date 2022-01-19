@@ -39,9 +39,9 @@ namespace DAPTUD.Services
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        public List<SanPham> FindProductByName(string name)
+        public List<SanPham> SearchProductByName(string name)
         {
-            return product.AsQueryable<SanPham>().AsEnumerable().Where(p => name.All(key => p.tenSanPham.Contains(key))).ToList();
+            return product.AsQueryable<SanPham>().AsEnumerable().Where(p => name.ToLower().All(key => p.tenSanPham.ToLower().Contains(key))).ToList();
         }
         /// <summary>
         /// List essential products

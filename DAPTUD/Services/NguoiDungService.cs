@@ -54,5 +54,26 @@ namespace DAPTUD.Services
 
             return await cus.UpdateOneAsync(filter, acceptDefault);
         }
+
+        public async Task<NguoiDung> GetUserByEmail(string email)
+        {
+            return await cus.Find<NguoiDung>(s => s.email == email).Limit(1).SingleAsync();
+        }
+
+        public async Task<NguoiDung> GetUserByEmailAndPassword(string email, string matkhau)
+        {
+            return await cus.Find<NguoiDung>(s =>  s.email == email && s.matKhau == matkhau ).Limit(1).SingleAsync();
+        }
+
+        public async Task<NguoiDung> CreateAsync(NguoiDung user)
+        {
+            await cus.InsertOneAsync(user).ConfigureAwait(false);
+            return user;
+        }
+
+        public Task<List<NguoiDung>> GetAll()
+        {
+            return cus.Find(c => true).ToListAsync();
+        }
     }
 }

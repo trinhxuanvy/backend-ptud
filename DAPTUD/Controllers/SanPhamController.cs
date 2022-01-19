@@ -1,5 +1,6 @@
 ﻿using DAPTUD.Models;
 using DAPTUD.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -29,6 +30,27 @@ namespace DAPTUD.Controllers
                 return NotFound();
             }
             return Ok(product);
+        }
+        [HttpGet]
+        public async Task<List<SanPham>> GetAllProducts()
+        {
+            return await productService.GetAllProduct();
+        }
+        [HttpGet("essential")]
+        public async Task<List<SanPham>> GetEssentialProducts()
+        {
+            return await productService.EssentialProducts();
+        }
+        [HttpPost]
+        [Route("upload")]
+        public async Task<List<SanPham>> ImportProductsByExcel(IFormFile file)
+        {
+            return await productService.ImportProductByExcel(file);
+        }
+        [HttpPost]
+        public async Task<SanPham> InsertNewProduct(SanPham prod)
+        {
+            return await productService.CreateProduct(prod);
         }
     }
 }

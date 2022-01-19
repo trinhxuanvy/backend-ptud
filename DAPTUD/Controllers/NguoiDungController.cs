@@ -1,5 +1,6 @@
 ﻿using DAPTUD.Models;
 using DAPTUD.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -23,9 +24,10 @@ namespace DAPTUD.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<string> Get()
+        [HttpGet, Authorize(Roles = "Admin")]
+        public Task<List<NguoiDung>> GetAll()
         {
-            return new string[] { "value1", "value2" };
+            return cusService.GetAll();
         }
 
         // GET api/<NguoiDungController>/5

@@ -24,6 +24,8 @@ namespace DAPTUD.Services
         public int total { get; set; }
         public string status { get; set; }
         public bool action { get; set; }
+        public string payment { get; set; }
+        public string oldStatus { get; set; }
     }
     public class DonHangService
     {
@@ -80,6 +82,8 @@ namespace DAPTUD.Services
                 tmp.invoiceDetail = listinvoiceDetails;
                 tmp.total = tmptotal;
                 tmp.status = inv.tinhTrang;
+                tmp.oldStatus = inv.tinhTrangCu;
+                tmp.payment = inv.phuongThucThanhToan;
                 tmp.action = inv.tinhTrang == "Đóng gói" ? true : false;
                 result.Add(tmp);
 

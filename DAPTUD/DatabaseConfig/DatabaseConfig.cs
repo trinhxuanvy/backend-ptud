@@ -16,5 +16,13 @@ namespace DAPTUD.DbConfig
         public string DatabaseName { get; set; }
         public string VanDonCollectionName { get; set; }
         public string ShipperCollectionName { get; set; }
+
+        public string CuaHangCollectionName { get; set; }
+
+        public string ViTriCuaHangCollectionName { get; set; }
+
+        public string ViTriKhachHangCollectionName { get; set; }
+
+        public string ViTriShipperCollectionName { get; set; }
     }
 }

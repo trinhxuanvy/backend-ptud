@@ -1,6 +1,8 @@
 ﻿using DAPTUD.Models;
 using DAPTUD.Services;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using Stripe.Checkout;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -56,6 +58,31 @@ namespace DAPTUD.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+        }
+        
+        [HttpPost("online")]
+        public ActionResult Create()
+        {
+            var domain = "http://localhost:4200";
+            var options = new SessionCreateOptions
+            {
+                LineItems = new List<SessionLineItemOptions>
+                {
+                  new SessionLineItemOptions
+                  {
+                    Price = "price_1KJes3HfeS4VmIfg0D1tKcYe",
+                    Quantity = 1,
+                  },
+                },
+                Mode = "payment",
+                SuccessUrl = domain + "/invoice",
+                CancelUrl = domain + "/invoice",
+            };
+            var service = new SessionService();
+            Session session = service.Create(options);
+
+            Response.Headers.Add("Location", session.Url);
+            return new StatusCodeResult(303);
         }
     }
 }

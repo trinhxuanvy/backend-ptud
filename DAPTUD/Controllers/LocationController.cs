@@ -57,5 +57,18 @@ namespace DAPTUD.Controllers
 
             return Ok(lct);
         }
+
+        [HttpGet("cuahang/{id}")]
+        public async Task<IActionResult> GetMotViTriCuaHang(string id)
+        {
+            var lct = await locationService.GetMotViTriCuaHang(id);
+
+            if (lct == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(lct);
+        }
     }
 }

@@ -61,7 +61,7 @@ namespace DAPTUD.Controllers
         }
         
         [HttpPost("online")]
-        public ActionResult Create()
+        public IActionResult Create()
         {
             var domain = "http://localhost:4200";
             var options = new SessionCreateOptions
@@ -73,6 +73,11 @@ namespace DAPTUD.Controllers
                     Price = "price_1KJes3HfeS4VmIfg0D1tKcYe",
                     Quantity = 1,
                   },
+                  new SessionLineItemOptions
+                  {
+                    Price = "price_1KJes3HfeS4VmIfg0D1tKcYe",
+                    Quantity = 2,
+                  },
                 },
                 Mode = "payment",
                 SuccessUrl = domain + "/invoice",
@@ -81,8 +86,9 @@ namespace DAPTUD.Controllers
             var service = new SessionService();
             Session session = service.Create(options);
 
-            Response.Headers.Add("Location", session.Url);
-            return new StatusCodeResult(303);
+            // Response.Headers.Add("Location", session.Url);
+            // return new StatusCodeResult(303);
+            return Ok(session.Url.ToString());
         }
     }
 }

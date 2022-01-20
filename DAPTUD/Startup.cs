@@ -55,19 +55,6 @@ namespace DAPTUD
             .AllowAnyHeader()
             .AllowAnyMethod()));
 
-            services.AddCors(options =>
-            {
-                options.AddPolicy(name: "MyPolicy",
-                    builder =>
-                    {
-                        builder.WithOrigins("http://localhost:4200", "https://checkout.stripe.com")
-                                    .SetIsOriginAllowedToAllowWildcardSubdomains()
-                                    .AllowAnyOrigin()
-                                    .AllowAnyHeader()
-                                    .AllowAnyMethod();
-                    });
-            });
-
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

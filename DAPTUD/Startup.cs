@@ -16,6 +16,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Stripe;
+
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using DAPTUD.Models;
 using Microsoft.IdentityModel.Tokens;
@@ -53,6 +55,19 @@ namespace DAPTUD
             .AllowAnyHeader()
             .AllowAnyMethod()));
 
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: "MyPolicy",
+                    builder =>
+                    {
+                        builder.WithOrigins("http://localhost:4200", "https://checkout.stripe.com")
+                                    .SetIsOriginAllowedToAllowWildcardSubdomains()
+                                    .AllowAnyOrigin()
+                                    .AllowAnyHeader()
+                                    .AllowAnyMethod();
+                    });
+            });
+
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -77,16 +92,17 @@ namespace DAPTUD
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            StripeConfiguration.ApiKey = "sk_test_51KIOLjHfeS4VmIfge6OsRS6lPH6IMrH7yJWVmZb5SJbH8KkDgV9RLXp9T1uPVF6wLngO1I7F5iJLXDKMI3yyCD1u00pgkFbzo5";
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
 
             app.UseHttpsRedirection();
-
-            app.UseCors("CorsPolicy");
-
+            app.UseStaticFiles();
             app.UseRouting();
+
+            app.UseCors("CorsPolicy"); app.UseCors();
 
             app.UseAuthentication();
 

@@ -10,7 +10,8 @@ namespace DAPTUD.Models
     public class Shipper
     {
         [BsonId]
-        public ObjectId _id { get; set; }   
+        [BsonRepresentation(MongoDB.Bson.BsonType.ObjectId)]
+        public string _id { get; set; }   
         [BsonElement]
         public string cmnd { get; set; }
         [BsonElement]

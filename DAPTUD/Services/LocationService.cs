@@ -1,5 +1,6 @@
 ﻿using DAPTUD.IDbConfig;
 using DAPTUD.Models;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
@@ -36,6 +37,11 @@ namespace DAPTUD.Services
         public async Task<List<ViTriShipper>> GetAllViTriShipper()
         {
             return await lctShipper.Find(l => true).ToListAsync();
+        }
+
+        public async Task<ViTriCuaHang> GetMotViTriCuaHang(string id)
+        {
+            return await lctCuaHang.Find<ViTriCuaHang>(l => l.objectId == id).FirstOrDefaultAsync();
         }
     }
 }

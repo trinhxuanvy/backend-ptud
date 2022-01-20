@@ -25,7 +25,7 @@ namespace DAPTUD.Services
 
         public async Task<Shipper> GetById(string id)
         {
-            var shipper = await shippers.Find(c => c._id == new ObjectId(id)).FirstOrDefaultAsync().ConfigureAwait(false);
+            var shipper = await shippers.Find(c => c._id == id).FirstOrDefaultAsync().ConfigureAwait(false);
             return shipper;
         }
     }

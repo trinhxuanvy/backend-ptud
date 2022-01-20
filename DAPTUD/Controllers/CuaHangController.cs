@@ -46,5 +46,17 @@ namespace DAPTUD.Controllers
             return Ok(store);
         }
 
+        [HttpGet("owner/{id}")]
+        public async Task<ActionResult<CuaHang>> GetCuaHangByOwner(string id)
+        {
+            var store = await storeSerive.GetCuaHangByOwner(id);
+
+            if (store == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(store);
+        }
     }
 }

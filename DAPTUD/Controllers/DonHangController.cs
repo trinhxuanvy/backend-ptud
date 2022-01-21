@@ -92,6 +92,17 @@ namespace DAPTUD.Controllers
             return Ok(result);
         }
 
+        [HttpPut("DoiTrangThai/{id}")]
+        public async Task<IActionResult> ChangeInvoiceStatus(string id, DonHang donHangIn)
+        {
+            var result = await invoiceService.ChangeInvoiceStatus(id, donHangIn);
+            if (result == null)
+            {
+                return NotFound();
+            }
+            return Ok(result);
+        }
+
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(string id, DonHang donHangIn)
         {

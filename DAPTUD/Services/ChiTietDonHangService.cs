@@ -43,13 +43,15 @@ namespace DAPTUD.Services
             return chiTietDonHang;
         }
 
-        public async Task<List<InvoiceDetail>> GetOneHaveNameProduct(string donHang)
+        public async Task<Invoice> GetOneHaveNameProduct(string donHang)
         {
+            Invoice result = new Invoice();
+
+            DonHang invs = await invoices.Find<DonHang>(s => s.id == donHang).FirstOrDefaultAsync();
+
             List<ChiTietDonHang> invdetails = await invoiceDetails.Find<ChiTietDonHang>(s => s.donHang == donHang).ToListAsync();
 
-            List<InvoiceDetail> listinvoiceDetails = new List<InvoiceDetail>();
-
-            int tmptotal = 0;
+            List<InvoiceDetail> listInvoiceDetails = new List<InvoiceDetail>();
 
             foreach (ChiTietDonHang invdetail in invdetails)
             {
@@ -62,11 +64,16 @@ namespace DAPTUD.Services
                     tmpInvoiceDetail.price = product.giaTien;
                     tmpInvoiceDetail.numOfElement = invdetail.soLuong;
                     tmpInvoiceDetail.unit = product.donViTinh;
-                    tmptotal += product.giaTien * invdetail.soLuong;
-                    listinvoiceDetails.Add(tmpInvoiceDetail);
+                    listInvoiceDetails.Add(tmpInvoiceDetail);
                 }
             }
-            return listinvoiceDetails;
+            result.invoiceID = invs.id;
+            result.timeOrder = invs.thoiGianDat.GetDateTimeFormats('d')[0];
+            result.status = invs.tinhTrang;
+            result.oldStatus = invs.tinhTrangCu;
+            result.payment = invs.phuongThucThanhToan;
+            result.invoiceDetail = listInvoiceDetails;
+            return result;
         }
     }
 }

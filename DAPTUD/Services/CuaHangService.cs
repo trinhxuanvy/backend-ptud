@@ -28,6 +28,8 @@ namespace DAPTUD.Services
         {
           return await stores.Find<CuaHang>(s => s.id == id).FirstOrDefaultAsync().ConfigureAwait(false);
         }
+
+        public async Task<CuaHang> UpdateCuaHangById (CuaHang storeInput)
         
         public async Task<CuaHang> GetCuaHangByOwner(string id)
         {
@@ -35,7 +37,7 @@ namespace DAPTUD.Services
         }
         public async Task<CuaHang> UpdateCuaHangById (string id, CuaHang storeInput)
         {
-            var store = await stores.ReplaceOneAsync(s => s.id == id, storeInput).ConfigureAwait(false);
+            var store = await stores.ReplaceOneAsync(s => s.id == storeInput.id, storeInput).ConfigureAwait(false);
             if (store != null)
             {
                 return storeInput;

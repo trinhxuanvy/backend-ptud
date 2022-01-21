@@ -46,6 +46,17 @@ namespace DAPTUD.Controllers
             return Ok(store);
         }
 
+        [HttpPut]
+        public async Task<IActionResult> UpdateCuaHangById(CuaHang store)
+        {
+            var newStore = await storeSerive.UpdateCuaHangById(store);
+
+            if (newStore == null)
+            {
+                return NotFound();
+            }
+            return Ok(newStore);
+        }
         [HttpGet("owner/{id}")]
         public async Task<ActionResult<CuaHang>> GetCuaHangByOwner(string id)
         {

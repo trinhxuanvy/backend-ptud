@@ -29,7 +29,7 @@ namespace DAPTUD.Controllers
             return invoiceDetailService.GetAll();
         }
         [HttpGet("getHaveName/{donHang}")]
-        public Task<List<InvoiceDetail>> GetOneHaveNameProduct(string donHang)
+        public Task<Invoice> GetOneHaveNameProduct(string donHang)
         {
             return invoiceDetailService.GetOneHaveNameProduct(donHang);
         }

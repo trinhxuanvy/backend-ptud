@@ -164,6 +164,14 @@ namespace DAPTUD.Services
             
             return await invoices.UpdateOneAsync(filter, acceptUpdate.Set("tinhTrangCu", invs[0].tinhTrangCu == "" ? (invs[0].tinhTrang) : (invs[0].tinhTrang += " -> Đã huỷ")));
         }
+        public async Task<DonHang> ChangeInvoiceStatus(string id, DonHang donHangIn)
+        {
+            DonHang donHang = await invoices.Find(c => c.id == id).FirstOrDefaultAsync().ConfigureAwait(false);
+            donHang.tinhTrangCu += (" -> " + donHang.tinhTrang);
+            donHang.tinhTrang = donHangIn.tinhTrang;
+            var updatedDonHang = await invoices.ReplaceOneAsync(c => c.id == id, donHang).ConfigureAwait(false);
+            return donHang;
+        }
         public async Task<List<DonHang>> GetAllDonHangForStatistic(string stordId)
         {
             return await invoices.Find<DonHang>(d => d.cuaHang == stordId && d.tinhTrang == "Giao thành công").ToListAsync();

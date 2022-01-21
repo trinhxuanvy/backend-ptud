@@ -42,5 +42,31 @@ namespace DAPTUD.Services
             await invoiceDetails.InsertManyAsync(chiTietDonHang);
             return chiTietDonHang;
         }
+
+        public async Task<List<InvoiceDetail>> GetOneHaveNameProduct(string donHang)
+        {
+            List<ChiTietDonHang> invdetails = await invoiceDetails.Find<ChiTietDonHang>(s => s.donHang == donHang).ToListAsync();
+
+            List<InvoiceDetail> listinvoiceDetails = new List<InvoiceDetail>();
+
+            int tmptotal = 0;
+
+            foreach (ChiTietDonHang invdetail in invdetails)
+            {
+                List<SanPham> prods = await product.Find<SanPham>(s => s.id == invdetail.sanPham).ToListAsync();
+
+                foreach (SanPham product in prods)
+                {
+                    InvoiceDetail tmpInvoiceDetail = new InvoiceDetail();
+                    tmpInvoiceDetail.product = product.tenSanPham;
+                    tmpInvoiceDetail.price = product.giaTien;
+                    tmpInvoiceDetail.numOfElement = invdetail.soLuong;
+                    tmpInvoiceDetail.unit = product.donViTinh;
+                    tmptotal += product.giaTien * invdetail.soLuong;
+                    listinvoiceDetails.Add(tmpInvoiceDetail);
+                }
+            }
+            return listinvoiceDetails;
+        }
     }
 }

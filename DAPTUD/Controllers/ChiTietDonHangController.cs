@@ -11,7 +11,7 @@ using Microsoft.Extensions.Options;
 using DAPTUD.Services;
 using DAPTUD.Models;
 
-namespace DiChoThue.Controllers
+namespace DAPTUD.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -27,6 +27,11 @@ namespace DiChoThue.Controllers
         public Task<List<ChiTietDonHang>> GetAll()
         {
             return invoiceDetailService.GetAll();
+        }
+        [HttpGet("getHaveName/{donHang}")]
+        public Task<List<InvoiceDetail>> GetOneHaveNameProduct(string donHang)
+        {
+            return invoiceDetailService.GetOneHaveNameProduct(donHang);
         }
         [HttpGet("{donHang}")]
         public Task<List<ChiTietDonHang>> Get(string donHang)

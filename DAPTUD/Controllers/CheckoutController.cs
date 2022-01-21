@@ -72,16 +72,11 @@ namespace DAPTUD.Controllers
                   {
                     Price = "price_1KJes3HfeS4VmIfg0D1tKcYe",
                     Quantity = 1,
-                  },
-                  new SessionLineItemOptions
-                  {
-                    Price = "price_1KJes3HfeS4VmIfg0D1tKcYe",
-                    Quantity = 2,
-                  },
+                  }
                 },
                 Mode = "payment",
-                SuccessUrl = domain + "/invoice",
-                CancelUrl = domain + "/invoice",
+                SuccessUrl = domain + "/invoice?success=true",
+                CancelUrl = domain + "/invoice?success=false",
             };
             var service = new SessionService();
             Session session = service.Create(options);

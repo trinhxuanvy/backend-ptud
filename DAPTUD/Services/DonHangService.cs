@@ -167,7 +167,10 @@ namespace DAPTUD.Services
         public async Task<DonHang> ChangeInvoiceStatus(string id, DonHang donHangIn)
         {
             DonHang donHang = await invoices.Find(c => c.id == id).FirstOrDefaultAsync().ConfigureAwait(false);
-            donHang.tinhTrangCu += (" -> " + donHang.tinhTrang);
+            if (donHang.tinhTrangCu.Length == 0)
+                donHang.tinhTrangCu = donHang.tinhTrang;
+            else
+                donHang.tinhTrangCu += (" -> " + donHang.tinhTrang);
             donHang.tinhTrang = donHangIn.tinhTrang;
             var updatedDonHang = await invoices.ReplaceOneAsync(c => c.id == id, donHang).ConfigureAwait(false);
             return donHang;

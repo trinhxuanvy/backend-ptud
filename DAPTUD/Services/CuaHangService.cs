@@ -33,7 +33,7 @@ namespace DAPTUD.Services
         
         public async Task<CuaHang> GetCuaHangByOwner(string id)
         {
-          return await stores.Find<CuaHang>(s => s.chuCuaHang == id).FirstOrDefaultAsync();
+          return await stores.Find<CuaHang>(s => s.chuCuaHang == id).FirstOrDefaultAsync().ConfigureAwait(false);
         }
         public async Task<CuaHang> UpdateCuaHangById (string id, CuaHang storeInput)
         {

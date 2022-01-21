@@ -57,12 +57,12 @@ namespace DAPTUD.Services
 
         public async Task<NguoiDung> GetUserByEmail(string email)
         {
-            return await cus.Find<NguoiDung>(s => s.email == email).Limit(1).SingleAsync();
+            return await cus.Find<NguoiDung>(s => s.email == email).FirstOrDefaultAsync();
         }
 
         public async Task<NguoiDung> GetUserByEmailAndPassword(string email, string matkhau)
         {
-            return await cus.Find<NguoiDung>(s =>  s.email == email && s.matKhau == matkhau ).Limit(1).SingleAsync();
+            return await cus.Find<NguoiDung>(s =>  s.email == email && s.matKhau == matkhau ).FirstOrDefaultAsync();
         }
 
         public async Task<NguoiDung> CreateAsync(NguoiDung user)

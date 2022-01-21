@@ -72,9 +72,9 @@ namespace DAPTUD.Controllers
                 return BadRequest("Invalid client request");
             }
 
-            var checkCusExist = cusService.GetUserByEmail(user.email);
+            var checkCusExist = cusService.GetUserByEmail(user.email).Result;
 
-            if(checkCusExist.Result != null)
+            if(checkCusExist != null)
             {
                 return BadRequest("Email Already exist");
             }

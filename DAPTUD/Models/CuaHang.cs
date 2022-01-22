@@ -28,6 +28,7 @@ namespace DAPTUD.Models
         public int trangThai { get; set; }
 
         public double doUyTin { get; set; }
+
         public string anhDaiDien { get; set; }
     }
 }

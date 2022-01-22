@@ -57,5 +57,10 @@ namespace DAPTUD.Controllers
         {
             return productService.SearchProductByName(name);
         }
+        [HttpGet("store/{idS}")]
+        public async Task<List<SanPham>> GetProductsByStoreID(string idS)
+        {
+            return await productService.GetProductsByStoreID(idS);
+        }
     }
 }

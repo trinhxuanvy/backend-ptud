@@ -64,6 +64,7 @@ namespace DAPTUD.Services
                     tmpInvoiceDetail.price = product.giaTien;
                     tmpInvoiceDetail.numOfElement = invdetail.soLuong;
                     tmpInvoiceDetail.unit = product.donViTinh;
+                    tmpInvoiceDetail.idInvoiceDetail = invdetail.id;
                     listInvoiceDetails.Add(tmpInvoiceDetail);
                 }
             }

@@ -19,5 +19,7 @@ namespace DAPTUD.Models
 
         [BsonRepresentation(MongoDB.Bson.BsonType.ObjectId)]
         public string sanPham { get; set; }
+
+        public string danhGia { get; set; }
     }
 }

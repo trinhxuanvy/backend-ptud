@@ -14,6 +14,8 @@ namespace DAPTUD.Services
         public int price { get; set; }
         public int numOfElement { get; set; }
         public string unit { get; set; }
+
+        public string idInvoiceDetail { get; set; }
     }
     public class Invoice
     {
@@ -70,6 +72,7 @@ namespace DAPTUD.Services
                         tmpInvoiceDetail.price = product.giaTien;
                         tmpInvoiceDetail.numOfElement = invdetail.soLuong;
                         tmpInvoiceDetail.unit = product.donViTinh;
+                        tmpInvoiceDetail.idInvoiceDetail = invdetail.id;
                         tmptotal += product.giaTien * invdetail.soLuong;
                         listinvoiceDetails.Add(tmpInvoiceDetail);
                     }

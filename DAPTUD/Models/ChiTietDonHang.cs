@@ -21,5 +21,7 @@ namespace DAPTUD.Models
         public string sanPham { get; set; }
 
         public string danhGia { get; set; }
+
+        public string phanHoi { get; set; }
     }
 }

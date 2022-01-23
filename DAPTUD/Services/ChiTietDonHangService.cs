@@ -76,5 +76,10 @@ namespace DAPTUD.Services
             result.invoiceDetail = listInvoiceDetails;
             return result;
         }
+
+        public async Task<ChiTietDonHang> GetById(string id)
+        {
+            return await invoiceDetails.Find<ChiTietDonHang>(s => s.id == id).FirstOrDefaultAsync().ConfigureAwait(false);
+        }
     }
 }

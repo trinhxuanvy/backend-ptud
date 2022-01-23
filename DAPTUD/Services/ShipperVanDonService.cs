@@ -22,7 +22,7 @@ namespace DAPTUD.Services
 
         public async Task<List<ShipperVanDon>> GetDonHangById(string id)
         {
-            return await shipper_vandon.Find(s => s.vandonid == id).ToListAsync();
+            return await shipper_vandon.Find(s => s.shipper == id).ToListAsync();
         }
 
     }

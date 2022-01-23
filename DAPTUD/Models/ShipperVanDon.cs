@@ -15,6 +15,9 @@ namespace DAPTUD.Models
         [BsonRepresentation(MongoDB.Bson.BsonType.ObjectId)]
         public string vandonid { get; set; }
 
-        public string sdtShipper { get; set; }
+        [BsonRepresentation(MongoDB.Bson.BsonType.ObjectId)]
+        public string shipper { get; set; }
+        public double khoangcach { get; set; }
+        public string trangthai { get; set; }
     }
 }

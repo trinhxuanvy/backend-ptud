@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+
 namespace DAPTUD.Controllers
 {
     [Route("api/[controller]")]
@@ -62,6 +63,19 @@ namespace DAPTUD.Controllers
         public async Task<IActionResult> GetMotViTriCuaHang(string id)
         {
             var lct = await locationService.GetMotViTriCuaHang(id);
+
+            if (lct == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(lct);
+        }
+        
+        [HttpGet("geo/{level}")]
+        public async Task<IActionResult> GetGeo(int level)
+        {
+            var lct = await locationService.GetStoreByDiseaseLevel(level);
 
             if (lct == null)
             {

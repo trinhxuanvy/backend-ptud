@@ -44,5 +44,17 @@ namespace DAPTUD.Controllers
         {
             return await invoiceDetailService.CreateAsync(chiTietDonHang);
         }
+
+        [HttpGet("detail/{id}")]
+        public async Task<IActionResult> GetById(string id)
+        {
+            var invoiceDetail = await invoiceDetailService.GetById(id);
+            if(invoiceDetail == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(invoiceDetail);
+        }
     }
 }

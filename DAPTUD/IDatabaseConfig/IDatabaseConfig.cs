@@ -22,7 +22,9 @@ namespace DAPTUD.IDbConfig
         string VanDonCollectionName { get; set; }
 
         string ShipperCollectionName { get; set; }
-        
+
+        string ShipperVanDonCollectionName { get; set; }
+
         string CuaHangCollectionName { get; set; }
 
         string ViTriCuaHangCollectionName { get; set; }

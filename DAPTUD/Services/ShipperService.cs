@@ -18,14 +18,47 @@ namespace DAPTUD.Services
             var database = client.GetDatabase(dbConfig.DatabaseName);
             shippers = database.GetCollection<Shipper>(dbConfig.ShipperCollectionName);
         }
+
+        public async Task<Shipper> GetUserByEmail(string email)
+        {
+            return await shippers.Find<Shipper>(s => s.email == email).FirstOrDefaultAsync();
+        }
+
+        public async Task<Shipper> GetUserByEmailAndPassword(string email, string matkhau)
+        {
+            return await shippers.Find<Shipper>(s => s.email == email && s.matKhau == matkhau).FirstOrDefaultAsync();
+        }
         public Task<List<Shipper>> GetAll()
         {
             return shippers.Find(c => true).ToListAsync();
         }
 
+        public async Task<Shipper> CreateAsync(Shipper user)
+        {
+            await shippers.InsertOneAsync(user).ConfigureAwait(false);
+            return user;
+        }
+
         public async Task<Shipper> GetById(string id)
         {
             var shipper = await shippers.Find(c => c._id == id).FirstOrDefaultAsync().ConfigureAwait(false);
+            return shipper;
+        }
+
+        public async Task<Shipper> UpdateShipperById(Shipper shipperInput)
+        {
+            var shipper = await shippers.ReplaceOneAsync(s => s._id == shipperInput._id, shipperInput).ConfigureAwait(false);
+            if (shipper != null)
+            {
+                return shipperInput;
+            }
+            return shipperInput;
+        }
+        public async Task<Shipper> UpdateShipperStatusById(int status, string id)
+        {
+            Shipper shipper = await shippers.Find(c => c._id == id).FirstOrDefaultAsync().ConfigureAwait(false);
+            shipper.trangThaiHoatDong = status;
+            var updatedShipper = await shippers.ReplaceOneAsync(c => c._id == id, shipper).ConfigureAwait(false);
             return shipper;
         }
     }

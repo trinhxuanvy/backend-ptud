@@ -75,8 +75,10 @@ namespace DAPTUD.Controllers
                   }
                 },
                 Mode = "payment",
-                SuccessUrl = domain + "/invoice?success=true",
-                CancelUrl = domain + "/invoice?success=false",
+                /*SuccessUrl = domain + "/invoice?success=true",
+                CancelUrl = domain + "/invoice?success=false",*/
+                SuccessUrl = domain + "/payment/success",
+                CancelUrl = domain + "/payment/failed",
             };
             var service = new SessionService();
             Session session = service.Create(options);

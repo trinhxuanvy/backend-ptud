@@ -14,6 +14,8 @@ namespace DAPTUD.Services
         public int price { get; set; }
         public int numOfElement { get; set; }
         public string unit { get; set; }
+
+        public string idInvoiceDetail { get; set; }
     }
     public class Invoice
     {
@@ -70,6 +72,7 @@ namespace DAPTUD.Services
                         tmpInvoiceDetail.price = product.giaTien;
                         tmpInvoiceDetail.numOfElement = invdetail.soLuong;
                         tmpInvoiceDetail.unit = product.donViTinh;
+                        tmpInvoiceDetail.idInvoiceDetail = invdetail.id;
                         tmptotal += product.giaTien * invdetail.soLuong;
                         listinvoiceDetails.Add(tmpInvoiceDetail);
                     }
@@ -133,7 +136,7 @@ namespace DAPTUD.Services
                 tmp.status = inv.tinhTrang;
                 tmp.oldStatus = inv.tinhTrangCu;
                 tmp.payment = inv.phuongThucThanhToan;
-                tmp.action = inv.tinhTrang == "Đóng gói" ? true : false;
+                tmp.action = (inv.tinhTrang == "Đóng gói" || inv.tinhTrang == "Mới tạo") ? true : false;
                 result.Add(tmp);
 
                 i++;
@@ -156,7 +159,7 @@ namespace DAPTUD.Services
 
             foreach (DonHang inv in invs)
             {
-                if(inv.tinhTrang != "Đóng gói")
+                if(inv.tinhTrang != "Đóng gói" && inv.tinhTrang != "Mới tạo")
                 {
                     return await invoices.UpdateOneAsync(filter, denyUpdate);
                 }

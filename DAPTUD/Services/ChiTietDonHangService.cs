@@ -64,6 +64,7 @@ namespace DAPTUD.Services
                     tmpInvoiceDetail.price = product.giaTien;
                     tmpInvoiceDetail.numOfElement = invdetail.soLuong;
                     tmpInvoiceDetail.unit = product.donViTinh;
+                    tmpInvoiceDetail.idInvoiceDetail = invdetail.id;
                     listInvoiceDetails.Add(tmpInvoiceDetail);
                 }
             }
@@ -74,6 +75,11 @@ namespace DAPTUD.Services
             result.payment = invs.phuongThucThanhToan;
             result.invoiceDetail = listInvoiceDetails;
             return result;
+        }
+
+        public async Task<ChiTietDonHang> GetById(string id)
+        {
+            return await invoiceDetails.Find<ChiTietDonHang>(s => s.id == id).FirstOrDefaultAsync().ConfigureAwait(false);
         }
     }
 }

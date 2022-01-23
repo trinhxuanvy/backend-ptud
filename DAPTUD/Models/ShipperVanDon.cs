@@ -1,4 +1,4 @@
-﻿using MongoDB.Bson.Serialization.Attributes;
+using MongoDB.Bson.Serialization.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,22 +6,18 @@ using System.Threading.Tasks;
 
 namespace DAPTUD.Models
 {
-    public class ChiTietDonHang
+    public class ShipperVanDon
     {
         [BsonId]
         [BsonRepresentation(MongoDB.Bson.BsonType.ObjectId)]
-
-        public string id { get; set; }
-        public int soLuong { get; set; }
+        public string _id { get; set; }
 
         [BsonRepresentation(MongoDB.Bson.BsonType.ObjectId)]
-        public string donHang { get; set; }
+        public string vandonid { get; set; }
 
         [BsonRepresentation(MongoDB.Bson.BsonType.ObjectId)]
-        public string sanPham { get; set; }
-
-        public string danhGia { get; set; }
-
-        public string phanHoi { get; set; }
+        public string shipper { get; set; }
+        public double khoangcach { get; set; }
+        public string trangthai { get; set; }
     }
 }

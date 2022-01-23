@@ -1,5 +1,6 @@
 using DAPTUD.IDbConfig;
 using DAPTUD.Models;
+using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
@@ -23,6 +24,12 @@ namespace DAPTUD.Services
         public async Task<List<ShipperVanDon>> GetDonHangById(string id)
         {
             return await shipper_vandon.Find(s => s.shipper == id).ToListAsync();
+        }
+
+        public async Task<ShipperVanDon> MakeShipperVanDon(ShipperVanDon data)
+        {
+            await shipper_vandon.InsertOneAsync(data);
+            return data;
         }
 
     }

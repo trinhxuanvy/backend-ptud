@@ -42,6 +42,7 @@ namespace DAPTUD
             services.AddSingleton<IDatabaseConfig>(provider => provider.GetRequiredService<IOptions<DatabaseConfig>>().Value);
             services.AddScoped<SanPhamService>();
             services.AddScoped<DonHangService>();
+            services.AddScoped<ShipperVanDonService>();
             services.AddScoped<NguoiDungService>();
             services.AddScoped<ChiTietDonHangService>();
             services.AddScoped<VanDonService>();

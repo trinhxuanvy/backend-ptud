@@ -29,11 +29,19 @@ namespace DAPTUD.Controllers
         {
             return shipperService.GetAll();
         }
-        [HttpGet("{id}")]
 
+        [HttpGet("{id}")]
         public async Task<Shipper> GetById(string id)
         {
             return await shipperService.GetById(id);
         }
+
+        [HttpPost("update/{id}")]
+        public async Task<Shipper> UpdateShipperStatusById(string id, int status)
+        {
+            return await shipperService.UpdateShipperStatusById(status,id);
+        }
+
+
     }
 }

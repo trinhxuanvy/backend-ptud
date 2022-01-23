@@ -28,5 +28,22 @@ namespace DAPTUD.Services
             var shipper = await shippers.Find(c => c._id == id).FirstOrDefaultAsync().ConfigureAwait(false);
             return shipper;
         }
+
+        public async Task<Shipper> UpdateShipperById(Shipper shipperInput)
+        {
+            var shipper = await shippers.ReplaceOneAsync(s => s._id == shipperInput._id, shipperInput).ConfigureAwait(false);
+            if (shipper != null)
+            {
+                return shipperInput;
+            }
+            return shipperInput;
+        }
+        public async Task<Shipper> UpdateShipperStatusById(int status, string id)
+        {
+            Shipper shipper = await shippers.Find(c => c._id == id).FirstOrDefaultAsync().ConfigureAwait(false);
+            shipper.trangThaiHoatDong = status;
+            var updatedShipper = await shippers.ReplaceOneAsync(c => c._id == id, shipper).ConfigureAwait(false);
+            return shipper;
+        }
     }
 }

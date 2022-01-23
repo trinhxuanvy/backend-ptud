@@ -28,11 +28,18 @@ namespace DAPTUD.Controllers
         {
             return vanDonService.GetAll();
         }
-        [HttpGet("{id}")]
 
-        public async Task<DonHang> GetById(string id)
+        [HttpGet("invoice/{id}")]
+        public async Task<VanDon> GetById(string id)
         {
             return await vanDonService.GetById(id);
+        }
+
+        [HttpGet("store/{id}")]
+
+        public async Task<VanDon> GetByIdStore(string id)
+        {
+            return await vanDonService.GetByIdStore(id);
         }
         [HttpPost]
         public async Task<VanDon> CreateAsync(VanDon VanDon)

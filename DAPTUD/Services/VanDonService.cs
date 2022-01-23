@@ -14,6 +14,7 @@ namespace DAPTUD.Services
     {
         private readonly IMongoCollection<VanDon> vanDons;
         private readonly IMongoCollection<DonHang> donHangs;
+        private readonly IMongoCollection<CuaHang> cuaHangs;
         public VanDonService(IDatabaseConfig dbConfig)
         {
             var client = new MongoClient(dbConfig.ConnectionString);
@@ -27,9 +28,13 @@ namespace DAPTUD.Services
             return vanDons.Find(c => true).ToListAsync();
         }
 
-        public async Task<DonHang> GetById(string id)
+        public async Task<VanDon> GetById(string id)
         {
-            return await donHangs.Find(c => c.id == id).FirstOrDefaultAsync().ConfigureAwait(false);
+            return await vanDons.Find(c => c._id == id).FirstOrDefaultAsync().ConfigureAwait(false);
+        }
+        public async Task<VanDon> GetByIdStore(string id)
+        {
+            return await vanDons.Find<VanDon>(c => c.cuaHang == id).FirstOrDefaultAsync().ConfigureAwait(false);
         }
         public async Task<VanDon> CreateAsync(VanDon VanDon)
         {
@@ -46,7 +51,8 @@ namespace DAPTUD.Services
             vanDonIn._id = vanDon._id;
             if (vanDonIn.thoiGianDat == null) vanDonIn.thoiGianDat = vanDon.thoiGianDat;
             if (vanDonIn.trangThai == null) vanDonIn.trangThai = vanDon.trangThai;
-            await vanDons.ReplaceOneAsync(c => c._id.ToString() == id, vanDonIn).ConfigureAwait(false);
+            if (vanDonIn.sdtShipper == null) vanDonIn.sdtShipper = vanDon.sdtShipper;
+            await vanDons.ReplaceOneAsync(c => c._id == id, vanDonIn).ConfigureAwait(false);
             return vanDonIn;
         }
     }

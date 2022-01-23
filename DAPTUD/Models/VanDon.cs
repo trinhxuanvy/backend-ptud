@@ -10,24 +10,22 @@ namespace DAPTUD.Models
     public class VanDon
     {
         [BsonId]
-        public ObjectId _id { get; set; }
-        [BsonElement]
-        public ObjectId maDonHang { get; set; }
-        [BsonElement]
+        [BsonRepresentation(MongoDB.Bson.BsonType.ObjectId)]
+        public string _id { get; set; }
+
+        [BsonRepresentation(MongoDB.Bson.BsonType.ObjectId)]
+        public string maDonHang { get; set; }
+        
         public string sdtNguoiMua { get; set; }
-        [BsonElement]
-        public ObjectId cuaHang { get; set; }
-        [BsonElement]
+
+        [BsonRepresentation(MongoDB.Bson.BsonType.ObjectId)]
+        public string cuaHang { get; set; }
         public string sdtShipper { get; set; }
-        [BsonElement]
         public string trangThai { get; set; }
-        [BsonElement]
         public string diaChiGiaoHang { get; set; }
-        [BsonElement]
-        public int giaTri { get; set; }
-        [BsonElement]
+        public Int32 giaTri { get; set; }
         public DateTime thoiGianDat { get; set; }
-        [BsonElement]
-        public DateTime thoiGianGiao { get; set; } 
+        public DateTime thoiGianGiao { get; set; }
+        public Int32 tienVanChuyen { get; set; }
     }
 }

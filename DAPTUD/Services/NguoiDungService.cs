@@ -12,12 +12,14 @@ namespace DAPTUD.Services
     {
         private readonly IMongoCollection<NguoiDung> cus;
         private readonly IMongoCollection<SanPham> prod;
+        private readonly IMongoCollection<CuaHang> store;
         public NguoiDungService(IDatabaseConfig dbConfig)
         {
             var client = new MongoClient(dbConfig.ConnectionString);
             var database = client.GetDatabase(dbConfig.DatabaseName);
             cus = database.GetCollection<NguoiDung>(dbConfig.NguoiDungCollectionName);
             prod = database.GetCollection<SanPham>(dbConfig.SanPhamCollectionName);
+            store = database.GetCollection<CuaHang>(dbConfig.CuaHangCollectionName);
         }
         public async Task<List<ProductCustom>> GetCartById(string id)
         {
@@ -28,12 +30,14 @@ namespace DAPTUD.Services
             {
                 ProductCustom tmp = new ProductCustom();
                 SanPham product = await prod.Find<SanPham>(s => s.id == customer.gioHang[i].sanPham).FirstOrDefaultAsync();
-                
+                CuaHang _store = await store.Find<CuaHang>(s => s.id == product.cuaHang).FirstOrDefaultAsync();
+                tmp.productImage = product.hinhAnh;
                 tmp.price = product.giaTien;
                 tmp.numOfElement = customer.gioHang[i].soLuong;
                 tmp.unit = product.donViTinh;
                 tmp.total = tmp.price * tmp.numOfElement;
-                tmp.product = product.tenSanPham + "(" + product.donViTinh + ")";
+                tmp.product = product.tenSanPham;
+                tmp.store = _store.id;
                 cart.Add(tmp);
             }
 
@@ -74,6 +78,18 @@ namespace DAPTUD.Services
         public Task<List<NguoiDung>> GetAll()
         {
             return cus.Find(c => true).ToListAsync();
+        }
+        public async Task<UpdateResult> InsertProductToCart(string prodID, string cusID)
+        {
+            SanPham product = await prod.Find<SanPham>(p => p.id == prodID).FirstOrDefaultAsync();
+            NguoiDung user = await cus.Find<NguoiDung>(u => u.id == cusID).FirstOrDefaultAsync();
+
+            Cart tmp = new Cart();
+            tmp.sanPham = prodID;
+            tmp.tenSanPham = product.tenSanPham;
+            tmp.soLuong = 1;
+            tmp.tongTien = product.giaTien;
+            return await cus.UpdateOneAsync(Builders<NguoiDung>.Filter.Eq("id", cusID), Builders<NguoiDung>.Update.Push("gioHang", tmp));
         }
     }
 }

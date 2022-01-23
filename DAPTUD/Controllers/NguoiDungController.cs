@@ -65,5 +65,15 @@ namespace DAPTUD.Controllers
         public void Delete(int id)
         {
         }
+        [HttpGet("{cusid}/{proid}")]
+        public async Task<ActionResult> InsertProductToCart(string cusid, string proid)
+        {
+            var res= await cusService.InsertProductToCart(proid, cusid);
+            if (res == null)
+            {
+                return NotFound("2");
+            }
+            return Ok(res);
+        }
     }
 }

@@ -107,18 +107,10 @@ namespace DAPTUD.Services
             await product.InsertOneAsync(prod).ConfigureAwait(false);
             return prod;
         }
-<<<<<<< HEAD
         public async Task<List<SanPham>> GetProductByIDStore(string id)
         {
             return await product.Find(p => p.cuaHang == id).ToListAsync();
         }
-
-=======
-        public async Task<List<SanPham>> GetProductsByStoreID(string idS)
-        {
-            return await product.Find<SanPham>(p=>p.cuaHang == idS).ToListAsync();
-        }
->>>>>>> 588085d9274d8585f1944538bf3d35c8b0cd9f2d
     }
 
 }

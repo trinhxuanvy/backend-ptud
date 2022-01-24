@@ -43,5 +43,11 @@ namespace DAPTUD.Services
             }
             return storeInput;
         }
+
+        public async Task<CuaHang> CreateAsync(CuaHang st)
+        {
+            await stores.InsertOneAsync(st).ConfigureAwait(false);
+            return st;
+        }
     }
 }

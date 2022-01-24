@@ -67,7 +67,7 @@ namespace DAPTUD.Services
 
         public async Task<NguoiDung> GetUserByEmailAndPassword(string email, string matkhau)
         {
-            return await cus.Find<NguoiDung>(s =>  s.email == email && s.matKhau == matkhau ).FirstOrDefaultAsync();
+            return await cus.Find<NguoiDung>(s => s.email == email && s.matKhau == matkhau).FirstOrDefaultAsync();
         }
 
         public async Task<NguoiDung> CreateAsync(NguoiDung user)
@@ -94,7 +94,7 @@ namespace DAPTUD.Services
             tmp.tongTien = product.giaTien;
             return await cus.UpdateOneAsync(Builders<NguoiDung>.Filter.Eq("id", cusID), Builders<NguoiDung>.Update.Push("gioHang", tmp));
         }
-<<<<<<< HEAD
+
         public async Task<bool> UpdateNumProductInCart(string cusID, string prodID, int num)
         {
             if (num < 1)
@@ -102,21 +102,15 @@ namespace DAPTUD.Services
             NguoiDung user = await cus.Find<NguoiDung>(u => u.id == cusID).FirstOrDefaultAsync();
             SanPham product = await prod.Find<SanPham>(p => p.id == prodID).FirstOrDefaultAsync();
             var update = Builders<NguoiDung>.Update.Combine(
-                Builders<NguoiDung>.Update.Set(x=>x.gioHang[-1].soLuong,num),
-                Builders<NguoiDung>.Update.Set(x=>x.gioHang[-1].tongTien,num*product.giaTien));
+                Builders<NguoiDung>.Update.Set(x => x.gioHang[-1].soLuong, num),
+                Builders<NguoiDung>.Update.Set(x => x.gioHang[-1].tongTien, num * product.giaTien));
             var filter = Builders<NguoiDung>.Filter.And(
-                Builders<NguoiDung>.Filter.Eq(x=>x.id,cusID),
-                Builders<NguoiDung>.Filter.ElemMatch(x=>x.gioHang,x=>x.sanPham==prodID)
+                Builders<NguoiDung>.Filter.Eq(x => x.id, cusID),
+                Builders<NguoiDung>.Filter.ElemMatch(x => x.gioHang, x => x.sanPham == prodID)
                 );
             var result = await cus.UpdateOneAsync(filter, update);
             return result.IsAcknowledged
                     && result.ModifiedCount > 0;
-=======
-
-        public async Task<NguoiDung> GetById(string id)
-        {
-            return await cus.Find<NguoiDung>(customer => customer.id == id).FirstOrDefaultAsync().ConfigureAwait(false);
->>>>>>> 39895c609a68dae159dd78b7df32e7344f4c8681
         }
     }
 }

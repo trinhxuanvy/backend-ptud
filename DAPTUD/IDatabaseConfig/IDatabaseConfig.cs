@@ -32,5 +32,6 @@ namespace DAPTUD.IDbConfig
         string ViTriKhachHangCollectionName { get; set; }
 
         string ViTriShipperCollectionName { get; set; }
+        string VungMienCollectionName { get; set; }
     }
 }

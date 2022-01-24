@@ -25,5 +25,6 @@ namespace DAPTUD.DbConfig
         public string ViTriKhachHangCollectionName { get; set; }
 
         public string ViTriShipperCollectionName { get; set; }
+        public string VungMienCollectionName { get; set; }
     }
 }

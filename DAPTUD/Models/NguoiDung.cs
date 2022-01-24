@@ -9,6 +9,7 @@ namespace DAPTUD.Models
     public class ProductCustom
     {
         public string productid { get; set; }
+        public string productImage { get; set; }
         public string product { get; set; }
         public string store { get; set; }
         public int numOfElement { get; set; }

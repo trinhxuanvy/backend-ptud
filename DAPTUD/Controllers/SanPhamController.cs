@@ -42,10 +42,11 @@ namespace DAPTUD.Controllers
             return await productService.EssentialProducts();
         }
         [HttpPost]
-        [Route("upload")]
-        public async Task<List<SanPham>> ImportProductsByExcel(IFormFile file)
+        [Route("uploadexcel/{id}")]
+        public async Task<List<SanPham>> ImportProductsByExcel(IFormFile file, string id)
         {
-            return await productService.ImportProductByExcel(file);
+            var file1 = Request.Form.Files[0];
+            return await productService.ImportProductByExcel(file1,id);
         }
         [HttpPost]
         public async Task<SanPham> InsertNewProduct(SanPham prod)
@@ -57,10 +58,11 @@ namespace DAPTUD.Controllers
         {
             return productService.SearchProductByName(name);
         }
-        [HttpGet("store/{idS}")]
-        public async Task<List<SanPham>> GetProductsByStoreID(string idS)
+        [HttpGet("store/{id}")]
+        public async Task<List<SanPham>> GetProductByIDStore(string id)
         {
-            return await productService.GetProductsByStoreID(idS);
+            return await productService.GetProductByIDStore(id);
         }
+        
     }
 }

@@ -10,9 +10,26 @@ namespace DAPTUD.Services
 {
     public class ChiTietDonHangService
     {
+        public class PhanHoi
+        {
+            public string tenKhachHang { get; set; }
+
+            public string maKhachHang { get; set; }
+
+            public string phanHoi { get; set; }
+
+            public string danhGia { get; set; }
+
+            public string id { get; set; }
+        }
+
         private readonly IMongoCollection<DonHang> invoices;
         private readonly IMongoCollection<ChiTietDonHang> invoiceDetails;
         private readonly IMongoCollection<SanPham> product;
+        private readonly IMongoCollection<NguoiDung> cus;
+        private readonly DonHangService invoiceService;
+        private readonly NguoiDungService cusService;
+
         public ChiTietDonHangService(IDatabaseConfig dbConfig)
         {
             var client = new MongoClient(dbConfig.ConnectionString);
@@ -20,6 +37,7 @@ namespace DAPTUD.Services
             invoices = database.GetCollection<DonHang>(dbConfig.DonHangCollectionName);
             product = database.GetCollection<SanPham>(dbConfig.SanPhamCollectionName);
             invoiceDetails = database.GetCollection<ChiTietDonHang>(dbConfig.ChiTietDonHangCollectionName);
+            cus = database.GetCollection<NguoiDung>(dbConfig.NguoiDungCollectionName);
         }
 
         public async Task<List<ChiTietDonHang>> GetAll()
@@ -80,6 +98,35 @@ namespace DAPTUD.Services
         public async Task<ChiTietDonHang> GetById(string id)
         {
             return await invoiceDetails.Find<ChiTietDonHang>(s => s.id == id).FirstOrDefaultAsync().ConfigureAwait(false);
+        }
+
+        public async Task<List<PhanHoi>> GetAllOfStore(string storeId)
+        {
+            List<DonHang> invoicesL = await invoices.Find<DonHang>(s => s.cuaHang == storeId).ToListAsync();
+            List<ChiTietDonHang> temp;
+
+            List<PhanHoi> list = new List<PhanHoi>();
+            PhanHoi tempRes;
+
+            NguoiDung customer; 
+
+            foreach(var item in invoicesL)
+            {
+                customer = await cus.Find<NguoiDung>(s => s.id == item.nguoiMua).FirstOrDefaultAsync().ConfigureAwait(false);
+                temp = await Get(item.id);
+                foreach(var invoiceD in temp)
+                {
+                    tempRes = new PhanHoi();
+                    tempRes.maKhachHang = customer.id;
+                    tempRes.tenKhachHang = customer.hoTen;
+                    tempRes.phanHoi = invoiceD.phanHoi;
+                    tempRes.id = invoiceD.id;
+                    tempRes.danhGia = invoiceD.danhGia;
+                    list.Add(tempRes);
+                }    
+            }
+
+            return list;
         }
     }
 }

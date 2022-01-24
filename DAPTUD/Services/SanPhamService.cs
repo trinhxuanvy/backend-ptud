@@ -56,7 +56,7 @@ namespace DAPTUD.Services
         /// </summary>
         /// <param name="file"></param>
         /// <returns></returns>
-        public async Task<List<SanPham>> ImportProductByExcel(IFormFile file)
+        public async Task<List<SanPham>> ImportProductByExcel(IFormFile file,string cuahang)
         {
             try
             {
@@ -70,16 +70,25 @@ namespace DAPTUD.Services
                         var rowcount = worksheet.Dimension.Rows;
                         for (var row = 2; row <= rowcount; row++)
                         {
-                            listProduct.Add(new SanPham
+                            SanPham prod = new SanPham
                             {
                                 tenSanPham = worksheet.Cells[row, 1].Value.ToString().Trim(),
                                 xuatXu = worksheet.Cells[row, 2].Value.ToString().Trim(),
                                 giaTien = Int32.Parse(worksheet.Cells[row, 3].Value.ToString().Trim()),
                                 hanSuDung = DateTime.Parse(worksheet.Cells[row, 4].Value.ToString().Trim()),
-                                hinhAnh = worksheet.Cells[row, 5].Value.ToString().Trim()
-                            });
+                                hinhAnh = worksheet.Cells[row, 5].Value.ToString().Trim(),
+                                tenCuaHang = worksheet.Cells[row, 6].Value.ToString().Trim(),
+                                tenLoaiHang = worksheet.Cells[row, 7].Value.ToString().Trim(),
+                                donViTinh = worksheet.Cells[row, 8].Value.ToString().Trim(),
+                                cuaHang = cuahang
+                            };
+                            listProduct.Add(prod);
                         }
                     }
+                }
+                foreach (var item in listProduct)
+                {
+                    await product.InsertOneAsync(item).ConfigureAwait(false);
                 }
                 return listProduct;
             }
@@ -98,9 +107,9 @@ namespace DAPTUD.Services
             await product.InsertOneAsync(prod).ConfigureAwait(false);
             return prod;
         }
-        public async Task<List<SanPham>> GetProductsByStoreID(string idS)
+        public async Task<List<SanPham>> GetProductByIDStore(string id)
         {
-            return await product.Find<SanPham>(p=>p.cuaHang == idS).ToListAsync();
+            return await product.Find(p => p.cuaHang == id).ToListAsync();
         }
     }
 

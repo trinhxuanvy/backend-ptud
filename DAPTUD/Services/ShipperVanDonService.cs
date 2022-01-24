@@ -1,5 +1,6 @@
 ﻿using DAPTUD.IDbConfig;
 using DAPTUD.Models;
+using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
@@ -48,6 +49,12 @@ namespace DAPTUD.Services
                 var updatedShipper = await shipper_vandon.ReplaceOneAsync(c => c._id == ShippernotinVanDon._id, ShippernotinVanDon).ConfigureAwait(false);
             }   
             return shippervandon[0];
+        }
+
+        public async Task<ShipperVanDon> MakeShipperVanDon(ShipperVanDon data)
+        {
+            await shipper_vandon.InsertOneAsync(data);
+            return data;
         }
 
     }

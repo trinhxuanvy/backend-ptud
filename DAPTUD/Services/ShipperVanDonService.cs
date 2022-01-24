@@ -1,4 +1,4 @@
-using DAPTUD.IDbConfig;
+﻿using DAPTUD.IDbConfig;
 using DAPTUD.Models;
 using MongoDB.Driver;
 using System;
@@ -23,6 +23,31 @@ namespace DAPTUD.Services
         public async Task<List<ShipperVanDon>> GetDonHangById(string id)
         {
             return await shipper_vandon.Find(s => s.shipper == id).ToListAsync();
+        }
+        public async Task<ShipperVanDon> UpdateShipperVanDonStatusById(string status, string id)
+        {
+            ShipperVanDon shippervandon = await shipper_vandon.Find(c => c._id == id).FirstOrDefaultAsync().ConfigureAwait(false);
+            shippervandon.trangthai = status;
+            var updatedShipper = await shipper_vandon.ReplaceOneAsync(c => c._id == id, shippervandon).ConfigureAwait(false);
+            return shippervandon;
+        }
+        public async Task<ShipperVanDon> UpdateShipperVanDonStatusesById(string shipperid, string vandonid)
+        {
+            List<ShipperVanDon> shipperNotIn = new List<ShipperVanDon>();
+            List<ShipperVanDon> shippervandon = await shipper_vandon.Find(c => c.vandonid == vandonid).ToListAsync();
+            foreach(ShipperVanDon ShippernotinVanDon in shippervandon)
+            {
+                if(ShippernotinVanDon.shipper!=shipperid)
+                {
+                    ShippernotinVanDon.trangthai = "Hủy nhận";
+                    shipperNotIn.Add(ShippernotinVanDon);
+                }
+            }
+            foreach (ShipperVanDon ShippernotinVanDon in shipperNotIn)
+            {
+                var updatedShipper = await shipper_vandon.ReplaceOneAsync(c => c._id == ShippernotinVanDon._id, ShippernotinVanDon).ConfigureAwait(false);
+            }   
+            return shippervandon[0];
         }
 
     }

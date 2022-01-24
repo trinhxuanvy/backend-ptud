@@ -193,12 +193,20 @@ namespace DAPTUD.Services
         }
         public async Task<DonHang> Update(string id, DonHang donHangIn)
         {
-            DonHang donHang = await invoices.Find(c => c.id.ToString() == id).FirstOrDefaultAsync().ConfigureAwait(false);
+            DonHang donHang = await invoices.Find(c => c.id == id).FirstOrDefaultAsync().ConfigureAwait(false);
             donHangIn.id = donHang.id;
             if (donHangIn.thoiGianDat == null) donHangIn.thoiGianDat = donHang.thoiGianDat;
             if (donHangIn.tinhTrang == null) donHangIn.tinhTrang = donHang.tinhTrang;
-            var updatedDonHang = await invoices.ReplaceOneAsync(c => c.id.ToString() == id, donHangIn).ConfigureAwait(false);
+            var updatedDonHang = await invoices.ReplaceOneAsync(c => c.id== id, donHangIn).ConfigureAwait(false);
             return donHangIn;
+        }
+        public async Task<DonHang> Update1(string id, string shipperid, string tinhtrang)
+        {
+            DonHang donHang = await invoices.Find(c => c.id == id).FirstOrDefaultAsync().ConfigureAwait(false);
+            donHang.tinhTrang = tinhtrang;
+            donHang.shipper = shipperid;
+            var updatedDonHang = await invoices.ReplaceOneAsync(c => c.id == id, donHang).ConfigureAwait(false);
+            return donHang;
         }
         public async Task<DonHang> DeleteAsync(string id)
         {

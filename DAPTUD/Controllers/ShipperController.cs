@@ -37,9 +37,9 @@ namespace DAPTUD.Controllers
         }
 
         [HttpPost("update/{id}")]
-        public async Task<Shipper> UpdateShipperStatusById(string id, int status)
+        public async Task<Shipper> UpdateShipperStatusById(string id, Shipper status)
         {
-            return await shipperService.UpdateShipperStatusById(status,id);
+            return await shipperService.UpdateShipperStatusById(status.trangThaiHoatDong,id);
         }
 
 

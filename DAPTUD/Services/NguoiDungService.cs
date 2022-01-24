@@ -112,5 +112,12 @@ namespace DAPTUD.Services
             return result.IsAcknowledged
                     && result.ModifiedCount > 0;
         }
+        public async Task<NguoiDung> UpdatePasswordById(string id, NguoiDung nguoiDung)
+        {
+            NguoiDung nguoiDung2 = await cus.Find(c => c.id == id).FirstOrDefaultAsync().ConfigureAwait(false);
+            nguoiDung2.matKhau = nguoiDung.matKhau;
+            var updatedNguoiDung = await cus.ReplaceOneAsync(c => c.id == id, nguoiDung2).ConfigureAwait(false);
+            return nguoiDung2;
+        }
     }
 }

@@ -87,7 +87,7 @@ namespace DAPTUD.Services
                 tmp.status = inv.tinhTrang;
                 tmp.oldStatus = inv.tinhTrangCu;
                 tmp.payment = inv.phuongThucThanhToan;
-                tmp.action = inv.tinhTrang == "Đóng gói" ? true : false;
+                tmp.action = inv.tinhTrang == "Đóng gói" || inv.tinhTrang == "Mới tạo" ? true : false;
                 result.Add(tmp);
 
                 i++;

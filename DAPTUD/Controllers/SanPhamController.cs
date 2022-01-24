@@ -62,7 +62,10 @@ namespace DAPTUD.Controllers
         public async Task<List<SanPham>> GetProductByIDStore(string id)
         {
             return await productService.GetProductByIDStore(id);
+<<<<<<< HEAD
 
+=======
+>>>>>>> 39895c609a68dae159dd78b7df32e7344f4c8681
         }
         
     }

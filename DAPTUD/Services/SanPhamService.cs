@@ -111,7 +111,6 @@ namespace DAPTUD.Services
         {
             return await product.Find(p => p.cuaHang == id).ToListAsync();
         }
-
     }
 
 }

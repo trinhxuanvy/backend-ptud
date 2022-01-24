@@ -94,6 +94,7 @@ namespace DAPTUD.Services
             tmp.tongTien = product.giaTien;
             return await cus.UpdateOneAsync(Builders<NguoiDung>.Filter.Eq("id", cusID), Builders<NguoiDung>.Update.Push("gioHang", tmp));
         }
+<<<<<<< HEAD
         public async Task<bool> UpdateNumProductInCart(string cusID, string prodID, int num)
         {
             if (num < 1)
@@ -110,6 +111,12 @@ namespace DAPTUD.Services
             var result = await cus.UpdateOneAsync(filter, update);
             return result.IsAcknowledged
                     && result.ModifiedCount > 0;
+=======
+
+        public async Task<NguoiDung> GetById(string id)
+        {
+            return await cus.Find<NguoiDung>(customer => customer.id == id).FirstOrDefaultAsync().ConfigureAwait(false);
+>>>>>>> 39895c609a68dae159dd78b7df32e7344f4c8681
         }
     }
 }

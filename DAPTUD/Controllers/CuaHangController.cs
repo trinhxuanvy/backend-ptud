@@ -46,6 +46,13 @@ namespace DAPTUD.Controllers
             return Ok(store);
         }
 
+        // POST api/<ValuesController>
+        [HttpPost]
+        public async Task<CuaHang> CreateAsync(CuaHang store)
+        {
+            return await storeSerive.CreateAsync(store);
+        }
+
         [HttpPut]
         public async Task<IActionResult> UpdateCuaHangById(CuaHang store)
         {

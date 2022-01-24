@@ -113,6 +113,16 @@ namespace DAPTUD.Controllers
             }
             return Ok(donHang);
         }
+        [HttpPost("{id}")]
+        public async Task<IActionResult> Update1(string id, string shipperid, string tinhtrang)
+        {
+            var donHang = await invoiceService.Update1(id, shipperid,tinhtrang);
+            if (donHang == null)
+            {
+                return NotFound();
+            }
+            return Ok(donHang);
+        }
         // DELETE api/<ValuesController>/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAsync(string id)

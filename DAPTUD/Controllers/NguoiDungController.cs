@@ -80,6 +80,7 @@ namespace DAPTUD.Controllers
         {
             return await cusService.UpdateNumProductInCart(cusid, proid, num);
         }
+
         [HttpPut("password/{id}")]
         public async Task<IActionResult> ChangePassword(string id, NguoiDung nguoiDung)
         {
@@ -99,6 +100,18 @@ namespace DAPTUD.Controllers
                 return NotFound();
             }
             return Ok(user_p);
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateNguoiDungById(NguoiDung cus)
+        {
+            var newCus = await cusService.UpdateNguoiDungById(cus);
+
+            if (newCus == null)
+            {
+                return NotFound();
+            }
+            return Ok(newCus);
         }
     }
 }

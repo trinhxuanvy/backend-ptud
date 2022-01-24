@@ -75,7 +75,7 @@ namespace DAPTUD.Controllers
             }
             return Ok(res);
         }
-        [HttpGet("{cusid}/{proid}/{num}")]
+        [HttpGet("cart/{cusid}/{proid}/{num}")]
         public async Task<bool> UpdateNumProductInCart(string cusid, string proid, int num)
         {
             return await cusService.UpdateNumProductInCart(cusid, proid, num);

@@ -86,7 +86,7 @@ namespace DAPTUD.Services
             NguoiDung user = await cus.Find<NguoiDung>(u => u.id == cusID).FirstOrDefaultAsync();
             foreach (var item in user.gioHang)
                 if (item.sanPham == product.id)
-                    return null;
+                    return await cus.UpdateOneAsync(Builders<NguoiDung>.Filter.Eq("id", cusID), Builders<NguoiDung>.Update.Set("id", cusID));
             Cart tmp = new Cart();
             tmp.sanPham = prodID;
             tmp.tenSanPham = product.tenSanPham;

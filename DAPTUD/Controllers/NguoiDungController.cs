@@ -31,7 +31,7 @@ namespace DAPTUD.Controllers
         }
 
         // GET api/<NguoiDungController>/5
-        [HttpGet("{id}")]
+        [HttpGet("cart/{id}")]
         public async Task<ActionResult<List<ProductCustom>>> GetCartById(string id)
         {
             var cart = await cusService.GetCartById(id);

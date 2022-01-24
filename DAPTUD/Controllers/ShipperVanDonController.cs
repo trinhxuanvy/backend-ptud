@@ -30,6 +30,11 @@ namespace DAPTUD.Controllers
         {
             return await shippervandonService.GetDonHangById(id);
         }
+        [HttpGet("vandon/{id}")]
+        public async Task<ShipperVanDon> GetDonHangOnById(string id)
+        {
+            return await shippervandonService.GetDonHangOnById(id);
+        }
 
         [HttpPost("{id}")]
         public async Task<ShipperVanDon> updateStatusById(string id,ShipperVanDon status)

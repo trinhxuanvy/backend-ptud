@@ -25,6 +25,18 @@ namespace DAPTUD.Services
         {
             return await shipper_vandon.Find(s => s.shipper == id).ToListAsync();
         }
+        public async Task<ShipperVanDon> GetDonHangOnById(string id)
+        {
+            var donhangs= await shipper_vandon.Find(s => s.shipper == id).ToListAsync();
+            foreach(ShipperVanDon donhang in donhangs)
+            {
+                if(donhang.trangthai =="Đã nhận")
+                {
+                    return donhang;
+                }
+            }
+            return donhangs[0];
+        }
         public async Task<ShipperVanDon> UpdateShipperVanDonStatusById(string status, string id)
         {
             ShipperVanDon shippervandon = await shipper_vandon.Find(c => c._id == id).FirstOrDefaultAsync().ConfigureAwait(false);

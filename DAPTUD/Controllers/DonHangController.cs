@@ -114,9 +114,29 @@ namespace DAPTUD.Controllers
             return Ok(donHang);
         }
         [HttpPost("{id}")]
-        public async Task<IActionResult> Update1(string id, string shipperid, string tinhtrang)
+        public async Task<IActionResult> Update1(string id, DonHang shipperid)
         {
-            var donHang = await invoiceService.Update1(id, shipperid,tinhtrang);
+            var donHang = await invoiceService.Update1(id, shipperid.shipper);
+            if (donHang == null)
+            {
+                return NotFound();
+            }
+            return Ok(donHang);
+        }
+        [HttpPost("success/{id}")]
+        public async Task<IActionResult> Update2(string id, DonHang shipperid)
+        {
+            var donHang = await invoiceService.Update2(id, shipperid.shipper);
+            if (donHang == null)
+            {
+                return NotFound();
+            }
+            return Ok(donHang);
+        }
+        [HttpPost("fail/{id}")]
+        public async Task<IActionResult> Update3(string id, DonHang shipperid)
+        {
+            var donHang = await invoiceService.Update3(id, shipperid.shipper);
             if (donHang == null)
             {
                 return NotFound();

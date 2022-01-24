@@ -56,5 +56,17 @@ namespace DAPTUD.Controllers
 
             return Ok(invoiceDetail);
         }
+
+        [HttpGet("store/{id}")]
+        public async Task<IActionResult> GetByStoreId(string id)
+        {
+            
+            var detail = await invoiceDetailService.GetAllOfStore(id);
+            if (detail == null)
+            {
+                return NotFound();
+            }
+            return Ok(detail);
+        }
     }
 }

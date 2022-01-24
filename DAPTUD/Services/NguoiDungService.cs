@@ -91,5 +91,10 @@ namespace DAPTUD.Services
             tmp.tongTien = product.giaTien;
             return await cus.UpdateOneAsync(Builders<NguoiDung>.Filter.Eq("id", cusID), Builders<NguoiDung>.Update.Push("gioHang", tmp));
         }
+
+        public async Task<NguoiDung> GetById(string id)
+        {
+            return await cus.Find<NguoiDung>(customer => customer.id == id).FirstOrDefaultAsync().ConfigureAwait(false);
+        }
     }
 }

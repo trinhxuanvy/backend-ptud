@@ -38,6 +38,7 @@ namespace DAPTUD.Services
                 tmp.total = tmp.price * tmp.numOfElement;
                 tmp.product = product.tenSanPham;
                 tmp.store = _store.id;
+                tmp.productid = product.id;
                 cart.Add(tmp);
             }
 
@@ -83,13 +84,32 @@ namespace DAPTUD.Services
         {
             SanPham product = await prod.Find<SanPham>(p => p.id == prodID).FirstOrDefaultAsync();
             NguoiDung user = await cus.Find<NguoiDung>(u => u.id == cusID).FirstOrDefaultAsync();
-
+            foreach (var item in user.gioHang)
+                if (item.sanPham == product.id)
+                    return null;
             Cart tmp = new Cart();
             tmp.sanPham = prodID;
             tmp.tenSanPham = product.tenSanPham;
             tmp.soLuong = 1;
             tmp.tongTien = product.giaTien;
             return await cus.UpdateOneAsync(Builders<NguoiDung>.Filter.Eq("id", cusID), Builders<NguoiDung>.Update.Push("gioHang", tmp));
+        }
+        public async Task<bool> UpdateNumProductInCart(string cusID, string prodID, int num)
+        {
+            if (num < 1)
+                return false;
+            NguoiDung user = await cus.Find<NguoiDung>(u => u.id == cusID).FirstOrDefaultAsync();
+            SanPham product = await prod.Find<SanPham>(p => p.id == prodID).FirstOrDefaultAsync();
+            var update = Builders<NguoiDung>.Update.Combine(
+                Builders<NguoiDung>.Update.Set(x=>x.gioHang[-1].soLuong,num),
+                Builders<NguoiDung>.Update.Set(x=>x.gioHang[-1].tongTien,num*product.giaTien));
+            var filter = Builders<NguoiDung>.Filter.And(
+                Builders<NguoiDung>.Filter.Eq(x=>x.id,cusID),
+                Builders<NguoiDung>.Filter.ElemMatch(x=>x.gioHang,x=>x.sanPham==prodID)
+                );
+            var result = await cus.UpdateOneAsync(filter, update);
+            return result.IsAcknowledged
+                    && result.ModifiedCount > 0;
         }
     }
 }

@@ -72,10 +72,10 @@ namespace DAPTUD.Controllers
             return Ok(lct);
         }
         
-        [HttpGet("geo/{level}")]
-        public async Task<IActionResult> GetGeo(int level)
+        [HttpGet("disease_store/{level}")]
+        public async Task<IActionResult> GetStoresByDiseaseLevel(int level)
         {
-            var lct = await locationService.GetStoreByDiseaseLevel(level);
+            var lct = await locationService.GetStoresByDiseaseLevel(level);
 
             if (lct == null)
             {

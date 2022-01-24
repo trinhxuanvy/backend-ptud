@@ -76,7 +76,7 @@ namespace DAPTUD.Services
         {
             return await cuaHangs.Find(s => true).ToListAsync();
         }
-        public async Task<List<CuaHang>> GetStoreByDiseaseLevel(int level)
+        public async Task<List<CuaHang>> GetStoresByDiseaseLevel(int level)
         {
             List<ViTriCuaHang> storeLocations = await GetAllViTriCuaHang();
             List<CuaHang> listGetStore = await GetAllCuaHang();

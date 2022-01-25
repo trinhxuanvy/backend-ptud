@@ -96,6 +96,18 @@ namespace DAPTUD.Controllers
             }
             return Ok(user_p);
         }
+
+        [HttpPut("loaind/{id}")]
+        public async Task<IActionResult> ChangeLoaiND(string id, NguoiDung nguoiDung)
+        {
+            var user_p = await cusService.UpdateLoaiNDById(id, nguoiDung);
+            if (user_p == null)
+            {
+                return NotFound();
+            }
+            return Ok(user_p);
+        }
+
         [HttpPut("verify/{id}")]
         public async Task<IActionResult> VerifyUser(string id, NguoiDung nguoiDung)
         {

@@ -128,6 +128,14 @@ namespace DAPTUD.Services
             var updatedNguoiDung = await cus.ReplaceOneAsync(c => c.id == id, nguoiDung2).ConfigureAwait(false);
             return nguoiDung2;
         }
+
+        public async Task<NguoiDung> UpdateLoaiNDById(string id, NguoiDung nguoiDung)
+        {
+            NguoiDung nguoiDung2 = await cus.Find(c => c.id == id).FirstOrDefaultAsync().ConfigureAwait(false);
+            nguoiDung2.loaiND = nguoiDung.loaiND;
+            var updatedNguoiDung = await cus.ReplaceOneAsync(c => c.id == id, nguoiDung2).ConfigureAwait(false);
+            return nguoiDung2;
+        }
         public async Task<NguoiDung> UpdateCMNDById(string id, NguoiDung nguoiDung)
         {
             NguoiDung nguoiDung2 = await cus.Find(c => c.id == id).FirstOrDefaultAsync().ConfigureAwait(false);

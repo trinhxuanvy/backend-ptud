@@ -112,5 +112,13 @@ namespace DAPTUD.Services
             return result.IsAcknowledged
                     && result.ModifiedCount > 0;
         }
-    }
+		public NguoiDung DeleteProductInCart(string cusID, string prodID)
+		{
+			var filter = Builders<NguoiDung>.Filter.Eq(u => u.id, cusID);
+			var update = Builders<NguoiDung>.Update.PullFilter(u => u.gioHang, u => u.sanPham == prodID);
+
+			var res = cus.FindOneAndUpdateAsync(filter, update).Result;
+			return res;
+		}
+	}
 }

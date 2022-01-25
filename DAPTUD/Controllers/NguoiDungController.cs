@@ -31,7 +31,7 @@ namespace DAPTUD.Controllers
         }
 
         // GET api/<NguoiDungController>/5
-        [HttpGet("{id}")]
+        [HttpGet("cart/{id}")]
         public async Task<ActionResult<List<ProductCustom>>> GetCartById(string id)
         {
             var cart = await cusService.GetCartById(id);
@@ -65,7 +65,7 @@ namespace DAPTUD.Controllers
         public void Delete(int id)
         {
         }
-        [HttpGet("{cusid}/{proid}")]
+        [HttpGet("cart/{cusid}/{proid}")]
         public async Task<ActionResult> InsertProductToCart(string cusid, string proid)
         {
             var res= await cusService.InsertProductToCart(proid, cusid);
@@ -75,10 +75,15 @@ namespace DAPTUD.Controllers
             }
             return Ok(res);
         }
-        [HttpGet("{cusid}/{proid}/{num}")]
+        [HttpGet("cart/{cusid}/{proid}/{num}")]
         public async Task<bool> UpdateNumProductInCart(string cusid, string proid, int num)
         {
             return await cusService.UpdateNumProductInCart(cusid, proid, num);
         }
-    }
+		[HttpGet("deleteitemcart/{cusid}/{proid}")]
+		public NguoiDung DeleteProductInCart(string cusid, string proid)
+		{
+			return cusService.DeleteProductInCart(cusid, proid);
+		}
+	}
 }

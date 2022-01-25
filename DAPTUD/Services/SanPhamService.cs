@@ -111,6 +111,9 @@ namespace DAPTUD.Services
         {
             return await product.Find(p => p.cuaHang == id).ToListAsync();
         }
+        public async Task<UpdateResult> DeleteProductByID(string id)
+        {
+            return await product.UpdateOneAsync(Builders<SanPham>.Filter.Eq("id",id),Builders<SanPham>.Update.Pull("_id",id));
+        }
     }
-
 }

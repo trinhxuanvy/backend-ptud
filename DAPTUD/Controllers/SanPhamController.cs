@@ -43,7 +43,7 @@ namespace DAPTUD.Controllers
         }
         [HttpPost]
         [Route("uploadexcel/{id}")]
-        public async Task<List<SanPham>> ImportProductsByExcel(IFormFile file, string id)
+        public async Task<List<SanPham>> ImportProductsByExcel(string id)
         {
             var file1 = Request.Form.Files[0];
             return await productService.ImportProductByExcel(file1,id);
@@ -63,6 +63,15 @@ namespace DAPTUD.Controllers
         {
             return await productService.GetProductByIDStore(id);
         }
-        
+        [HttpPut("delete/{id}")]
+        public async Task<ActionResult> DeleteProduct(string id)
+        {
+            var res= await productService.DeleteProductByID(id);
+            if (res == null)
+            {
+                return NotFound();
+            }
+            return Ok(res);
+        }
     }
 }

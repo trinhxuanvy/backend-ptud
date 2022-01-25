@@ -36,6 +36,19 @@ namespace DAPTUD.Controllers
             return await shippervandonService.GetDonHangOnById(id);
         }
 
+        [HttpPost]
+        public async Task<ActionResult> MakeShipperVanDon(ShipperVanDon data)
+        {
+            var store = await shippervandonService.MakeShipperVanDon(data);
+
+            if (store == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(store);
+        }
+
         [HttpPost("{id}")]
         public async Task<ShipperVanDon> updateStatusById(string id,ShipperVanDon status)
         {

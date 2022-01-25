@@ -42,6 +42,18 @@ namespace DAPTUD.Controllers
             return await shipperService.UpdateShipperStatusById(status.trangThaiHoatDong,id);
         }
 
+        [HttpPut]
+        public async Task<IActionResult> UpdateShipperById(Shipper shipper)
+        {
+            var newShipper = await shipperService.UpdateShipperById(shipper);
+
+            if (newShipper == null)
+            {
+                return NotFound();
+            }
+            return Ok(newShipper);
+        }
+
 
     }
 }

@@ -203,7 +203,8 @@ namespace DAPTUD.Services
         public async Task<DonHang> Update1(string id, string shipperid)
         {
             DonHang donHang = await invoices.Find(c => c.id == id).FirstOrDefaultAsync().ConfigureAwait(false);
-            donHang.tinhTrang = "Đang giao";
+            donHang.tinhTrangCu = donHang.tinhTrangCu + " -> " + donHang.tinhTrang;
+            donHang.tinhTrang = "Đang giao hàng";
             donHang.shipper = shipperid;
             var updatedDonHang = await invoices.ReplaceOneAsync(c => c.id == id, donHang).ConfigureAwait(false);
             return donHang;
@@ -211,6 +212,8 @@ namespace DAPTUD.Services
         public async Task<DonHang> Update2(string id, string shipperid)
         {
             DonHang donHang = await invoices.Find(c => c.id == id).FirstOrDefaultAsync().ConfigureAwait(false);
+            donHang.tinhTrangCu = donHang.tinhTrangCu + " -> " + donHang.tinhTrang;
+
             donHang.tinhTrang = "Giao thành công";
             donHang.shipper = shipperid;
             var updatedDonHang = await invoices.ReplaceOneAsync(c => c.id == id, donHang).ConfigureAwait(false);
@@ -219,6 +222,7 @@ namespace DAPTUD.Services
         public async Task<DonHang> Update3(string id, string shipperid)
         {
             DonHang donHang = await invoices.Find(c => c.id == id).FirstOrDefaultAsync().ConfigureAwait(false);
+            donHang.tinhTrangCu = donHang.tinhTrangCu + " -> " + donHang.tinhTrang;
             donHang.tinhTrang = "Giao thất bại";
             donHang.shipper = shipperid;
             var updatedDonHang = await invoices.ReplaceOneAsync(c => c.id == id, donHang).ConfigureAwait(false);

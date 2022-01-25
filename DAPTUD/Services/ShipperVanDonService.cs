@@ -50,10 +50,12 @@ namespace DAPTUD.Services
             List<ShipperVanDon> shippervandon = await shipper_vandon.Find(c => c.vandonid == vandonid).ToListAsync();
             foreach(ShipperVanDon ShippernotinVanDon in shippervandon)
             {
-                if(ShippernotinVanDon.shipper!=shipperid)
+                if(ShippernotinVanDon.shipper==shipperid)
                 {
-                    ShippernotinVanDon.trangthai = "Hủy nhận";
-                    shipperNotIn.Add(ShippernotinVanDon);
+                    
+                } 
+                else
+                {
                 }
             }
             foreach (ShipperVanDon ShippernotinVanDon in shipperNotIn)

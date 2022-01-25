@@ -180,7 +180,7 @@ namespace DAPTUD.Services
         }
         public async Task<List<DonHang>> GetAllDonHangForStatistic(string stordId)
         {
-            return await invoices.Find<DonHang>(d => d.cuaHang == stordId && d.tinhTrang == "Giao thành công").ToListAsync();
+            return await invoices.Find<DonHang>(d => d.cuaHang == stordId && (d.tinhTrang == "Giao thành công" || d.tinhTrang == "Đã nhận hàng")).ToListAsync();
         }
         public Task<List<DonHang>> GetAll()
         {

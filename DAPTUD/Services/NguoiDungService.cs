@@ -86,7 +86,7 @@ namespace DAPTUD.Services
             NguoiDung user = await cus.Find<NguoiDung>(u => u.id == cusID).FirstOrDefaultAsync();
             foreach (var item in user.gioHang)
                 if (item.sanPham == product.id)
-                    return null;
+                    return await cus.UpdateOneAsync(Builders<NguoiDung>.Filter.Eq("id", cusID), Builders<NguoiDung>.Update.Set("id", cusID));
             Cart tmp = new Cart();
             tmp.sanPham = prodID;
             tmp.tenSanPham = product.tenSanPham;
@@ -120,5 +120,31 @@ namespace DAPTUD.Services
 			var res = cus.FindOneAndUpdateAsync(filter, update).Result;
 			return res;
 		}
-	}
+
+        public async Task<NguoiDung> UpdatePasswordById(string id, NguoiDung nguoiDung)
+        {
+            NguoiDung nguoiDung2 = await cus.Find(c => c.id == id).FirstOrDefaultAsync().ConfigureAwait(false);
+            nguoiDung2.matKhau = nguoiDung.matKhau;
+            var updatedNguoiDung = await cus.ReplaceOneAsync(c => c.id == id, nguoiDung2).ConfigureAwait(false);
+            return nguoiDung2;
+        }
+        public async Task<NguoiDung> UpdateCMNDById(string id, NguoiDung nguoiDung)
+        {
+            NguoiDung nguoiDung2 = await cus.Find(c => c.id == id).FirstOrDefaultAsync().ConfigureAwait(false);
+            nguoiDung2.hinhAnhCMNDMatTruoc = nguoiDung.hinhAnhCMNDMatTruoc;
+            nguoiDung2.hinhAnhCMNDMatSau = nguoiDung.hinhAnhCMNDMatSau;
+            var updatedNguoiDung = await cus.ReplaceOneAsync(c => c.id == id, nguoiDung2).ConfigureAwait(false);
+            return nguoiDung2;
+        }
+
+        public async Task<NguoiDung> UpdateNguoiDungById(NguoiDung cusInput)
+        {
+            var customer = await cus.ReplaceOneAsync(s => s.id == cusInput.id, cusInput).ConfigureAwait(false);
+            if (customer != null)
+            {
+                return cusInput;
+            }
+            return cusInput;
+        }
+    }
 }

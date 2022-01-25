@@ -87,7 +87,7 @@ namespace DAPTUD.Services
                 tmp.status = inv.tinhTrang;
                 tmp.oldStatus = inv.tinhTrangCu;
                 tmp.payment = inv.phuongThucThanhToan;
-                tmp.action = inv.tinhTrang == "Đóng gói" ? true : false;
+                tmp.action = inv.tinhTrang == "Đóng gói" || inv.tinhTrang == "Mới tạo" ? true : false;
                 result.Add(tmp);
 
                 i++;
@@ -180,7 +180,7 @@ namespace DAPTUD.Services
         }
         public async Task<List<DonHang>> GetAllDonHangForStatistic(string stordId)
         {
-            return await invoices.Find<DonHang>(d => d.cuaHang == stordId && d.tinhTrang == "Giao thành công").ToListAsync();
+            return await invoices.Find<DonHang>(d => d.cuaHang == stordId && (d.tinhTrang == "Giao thành công" || d.tinhTrang == "Đã nhận hàng")).ToListAsync();
         }
         public Task<List<DonHang>> GetAll()
         {
@@ -193,12 +193,36 @@ namespace DAPTUD.Services
         }
         public async Task<DonHang> Update(string id, DonHang donHangIn)
         {
-            DonHang donHang = await invoices.Find(c => c.id.ToString() == id).FirstOrDefaultAsync().ConfigureAwait(false);
+            DonHang donHang = await invoices.Find(c => c.id == id).FirstOrDefaultAsync().ConfigureAwait(false);
             donHangIn.id = donHang.id;
             if (donHangIn.thoiGianDat == null) donHangIn.thoiGianDat = donHang.thoiGianDat;
             if (donHangIn.tinhTrang == null) donHangIn.tinhTrang = donHang.tinhTrang;
-            var updatedDonHang = await invoices.ReplaceOneAsync(c => c.id.ToString() == id, donHangIn).ConfigureAwait(false);
+            var updatedDonHang = await invoices.ReplaceOneAsync(c => c.id== id, donHangIn).ConfigureAwait(false);
             return donHangIn;
+        }
+        public async Task<DonHang> Update1(string id, string shipperid)
+        {
+            DonHang donHang = await invoices.Find(c => c.id == id).FirstOrDefaultAsync().ConfigureAwait(false);
+            donHang.tinhTrang = "Đang giao";
+            donHang.shipper = shipperid;
+            var updatedDonHang = await invoices.ReplaceOneAsync(c => c.id == id, donHang).ConfigureAwait(false);
+            return donHang;
+        }
+        public async Task<DonHang> Update2(string id, string shipperid)
+        {
+            DonHang donHang = await invoices.Find(c => c.id == id).FirstOrDefaultAsync().ConfigureAwait(false);
+            donHang.tinhTrang = "Giao thành công";
+            donHang.shipper = shipperid;
+            var updatedDonHang = await invoices.ReplaceOneAsync(c => c.id == id, donHang).ConfigureAwait(false);
+            return donHang;
+        }
+        public async Task<DonHang> Update3(string id, string shipperid)
+        {
+            DonHang donHang = await invoices.Find(c => c.id == id).FirstOrDefaultAsync().ConfigureAwait(false);
+            donHang.tinhTrang = "Giao thất bại";
+            donHang.shipper = shipperid;
+            var updatedDonHang = await invoices.ReplaceOneAsync(c => c.id == id, donHang).ConfigureAwait(false);
+            return donHang;
         }
         public async Task<DonHang> DeleteAsync(string id)
         {

@@ -30,6 +30,11 @@ namespace DAPTUD.Controllers
         {
             return await shippervandonService.GetDonHangById(id);
         }
+        [HttpGet("vandon/{id}")]
+        public async Task<ShipperVanDon> GetDonHangOnById(string id)
+        {
+            return await shippervandonService.GetDonHangOnById(id);
+        }
 
         [HttpPost]
         public async Task<ActionResult> MakeShipperVanDon(ShipperVanDon data)
@@ -43,6 +48,19 @@ namespace DAPTUD.Controllers
 
             return Ok(store);
         }
+
+        [HttpPost("{id}")]
+        public async Task<ShipperVanDon> updateStatusById(string id,ShipperVanDon status)
+        {
+            return await shippervandonService.UpdateShipperVanDonStatusById(status.trangthai,id);
+        }
+
+        [HttpPost("update/{shipperid}")]
+        public async Task<ShipperVanDon> UpdateShipperVanDonStatusesById(string shipperid, ShipperVanDon status)
+        {
+            return await shippervandonService.UpdateShipperVanDonStatusesById(shipperid, status.vandonid);
+        }
+
 
     }
 }

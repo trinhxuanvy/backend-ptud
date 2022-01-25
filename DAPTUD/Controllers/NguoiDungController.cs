@@ -85,5 +85,39 @@ namespace DAPTUD.Controllers
 		{
 			return cusService.DeleteProductInCart(cusid, proid);
 		}
-	}
+
+        [HttpPut("password/{id}")]
+        public async Task<IActionResult> ChangePassword(string id, NguoiDung nguoiDung)
+        {
+            var user_p = await cusService.UpdatePasswordById(id,nguoiDung);
+            if (user_p == null)
+            {
+                return NotFound();
+            }
+            return Ok(user_p);
+        }
+        [HttpPut("verify/{id}")]
+        public async Task<IActionResult> VerifyUser(string id, NguoiDung nguoiDung)
+        {
+            var user_p = await cusService.UpdateCMNDById(id, nguoiDung);
+            if (user_p == null)
+            {
+                return NotFound();
+            }
+            return Ok(user_p);
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateNguoiDungById(NguoiDung cus)
+        {
+            var newCus = await cusService.UpdateNguoiDungById(cus);
+
+            if (newCus == null)
+            {
+                return NotFound();
+            }
+            return Ok(newCus);
+        }
+    }
+
 }
